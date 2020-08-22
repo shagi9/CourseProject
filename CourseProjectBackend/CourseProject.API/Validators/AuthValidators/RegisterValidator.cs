@@ -30,7 +30,7 @@ namespace CourseProject.API.Validators.AuthValidators
             RuleFor(n => n.UserName)
                 .NotEmpty();
 
-            RuleFor(a => a.Age)
+            RuleFor(a => a.DateOfBirth)
                 .NotEmpty();
         }
     }

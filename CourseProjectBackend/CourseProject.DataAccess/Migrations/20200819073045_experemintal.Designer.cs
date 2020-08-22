@@ -4,14 +4,16 @@ using CourseProject.DataAccess.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CourseProject.DataAccess.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20200819073045_experemintal")]
+    partial class experemintal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,31 +87,31 @@ namespace CourseProject.DataAccess.Migrations
                         {
                             UserId = 1,
                             CourseId = 1,
-                            StartDate = new DateTime(2020, 9, 4, 12, 0, 1, 470, DateTimeKind.Local).AddTicks(1613)
+                            StartDate = new DateTime(2020, 9, 3, 10, 30, 44, 694, DateTimeKind.Local).AddTicks(3305)
                         },
                         new
                         {
                             UserId = 1,
                             CourseId = 2,
-                            StartDate = new DateTime(2020, 9, 4, 12, 0, 1, 473, DateTimeKind.Local).AddTicks(2408)
+                            StartDate = new DateTime(2020, 9, 3, 10, 30, 44, 698, DateTimeKind.Local).AddTicks(4561)
                         },
                         new
                         {
                             UserId = 2,
                             CourseId = 2,
-                            StartDate = new DateTime(2020, 9, 4, 12, 0, 1, 473, DateTimeKind.Local).AddTicks(2455)
+                            StartDate = new DateTime(2020, 9, 3, 10, 30, 44, 698, DateTimeKind.Local).AddTicks(4606)
                         },
                         new
                         {
                             UserId = 2,
                             CourseId = 2,
-                            StartDate = new DateTime(2020, 9, 4, 12, 0, 1, 473, DateTimeKind.Local).AddTicks(2463)
+                            StartDate = new DateTime(2020, 9, 3, 10, 30, 44, 698, DateTimeKind.Local).AddTicks(4614)
                         },
                         new
                         {
                             UserId = 2,
                             CourseId = 3,
-                            StartDate = new DateTime(2020, 9, 4, 12, 0, 1, 473, DateTimeKind.Local).AddTicks(2467)
+                            StartDate = new DateTime(2020, 9, 3, 10, 30, 44, 698, DateTimeKind.Local).AddTicks(4618)
                         });
                 });
 
@@ -123,12 +125,12 @@ namespace CourseProject.DataAccess.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -204,8 +206,8 @@ namespace CourseProject.DataAccess.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2e9bf8d7-5d6b-4e4a-a156-673923cb59da",
-                            DateOfBirth = new DateTime(1997, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 23,
+                            ConcurrencyStamp = "0fb509a8-8f4b-41b5-bc1e-dc1dfa567df9",
                             Email = "shagoferov@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Ilya",
@@ -213,7 +215,7 @@ namespace CourseProject.DataAccess.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "password",
                             PhoneNumberConfirmed = false,
-                            RegistrationDate = new DateTime(2020, 8, 20, 12, 0, 1, 482, DateTimeKind.Local).AddTicks(8798),
+                            RegistrationDate = new DateTime(2020, 8, 19, 10, 30, 44, 709, DateTimeKind.Local).AddTicks(2649),
                             TwoFactorEnabled = false,
                             UserName = "Shagi"
                         },
@@ -221,8 +223,8 @@ namespace CourseProject.DataAccess.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "96ee8f22-e5c3-4ac1-bb4c-e4982e6d1dfb",
-                            DateOfBirth = new DateTime(1998, 8, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 21,
+                            ConcurrencyStamp = "97fd02fc-cc91-40d3-b641-d13a81f28537",
                             Email = "yurii@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Yurii",
@@ -230,7 +232,7 @@ namespace CourseProject.DataAccess.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "password",
                             PhoneNumberConfirmed = false,
-                            RegistrationDate = new DateTime(2020, 8, 20, 12, 0, 1, 482, DateTimeKind.Local).AddTicks(8932),
+                            RegistrationDate = new DateTime(2020, 8, 19, 10, 30, 44, 709, DateTimeKind.Local).AddTicks(2796),
                             TwoFactorEnabled = false,
                             UserName = "Muzilko"
                         });
@@ -243,11 +245,20 @@ namespace CourseProject.DataAccess.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime>("Expires")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("RefreshToken")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReplacedByToken")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -291,14 +302,14 @@ namespace CourseProject.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "56fd3ceb-3bb8-4d83-a0f4-57edfdca09dc",
+                            ConcurrencyStamp = "e3871c26-95c8-4162-b2f4-14f51424a212",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "fcca3027-aae9-465a-b976-86e36d127903",
+                            ConcurrencyStamp = "57a3501d-595b-4a91-b298-6e31c81a924f",
                             Name = "student",
                             NormalizedName = "STUDENT"
                         });

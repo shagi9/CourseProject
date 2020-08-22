@@ -9,7 +9,9 @@ namespace CourseProject.BusinessLogic.Services.Interfaces
 {
     public interface IAuthService
     {
-        Task<string> Login(LoginDto loginModel);
+        Task<LoginViewModel> Login(LoginDto loginModel);
+        Task<RefreshTokenViewModel> RefreshToken(RefreshTokenViewModel token);
+        Task<IdentityResult> VerifyEmail(string userId, string token);
         Task<IdentityResult> Register(RegisterDto registerDto);
     }
 }

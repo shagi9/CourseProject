@@ -9,59 +9,80 @@ import { setUser } from '../../../store/actions/user.actions';
 import { useDispatch } from 'react-redux';
   
   export const LoginForm = () => {
+    
     const [form] = Form.useForm();
     const dispatch = useDispatch();
+
+    const initialValues = {
+      Login: "",
+      Password: "",
+      RememberMe: true,
+    };
+
+    const errorsSchema = {
+      username: ["username is invalid"],
+      password: ["Password is invalid"]
+    }
+
+    const validationSchema = {
+      Login: [
+        { required: true, message: "The Username field is required" }
+      ],
+      Password: [
+        { required: true, message: "The Password field is required" }
+      ]
+    }
     
     const onFinish = async values => {
-  
       const { status, data } = await postRequest('/auth/login', values);
-      
       if(status === 200) {
         if(data.token != null){
+          if(data.refreshToken != null){
+          set('refreshToken', data.refreshToken);  
           set('token', data.token);
-  
-          const userRespounce = await getRequest('/user/get-authorized-by-user');
-          if(userRespounce.status === 200){
-            dispatch(setUser(userRespounce.data));
+          
+          const userResponse = await getRequest('/user/get-authorized-by-user');
+          if(userResponse.status === 200){
+            dispatch(setUser(userResponse.data));
           }
         }
       }
+    }
       else {
         form.setFields([
-          {
-            name: 'login',
-            value: values.login,
-            errors: ["Login or password is invalid"]
-          },
-          {
-            name: 'password',
-            value: values.password,
-            errors: ["Login or password is invalid"]
-          }
-        ]);
-      }
-    };
+        {
+          name: 'login',
+          value: values.login,
+          errors: errorsSchema.username
+        },
+        {
+          name: 'password',
+          value: values.password,
+          errors: errorsSchema.password
+        }
+      ]);
+    }
+  }
 
   return (
     <Form
       className="login-form"
       name="basic"
-      initialValues={{ remember: true }}
+      initialValues={initialValues}
       onFinish={onFinish}
       form={form}
     >
       <Form.Item
         label="Username"
         name="login"
-        placeholder="username"
-        rules={[{ required: true, message: 'Please input your username!' }]}
+        rules={validationSchema.Login}
       >
         <Input placeholder="Username" />
       </Form.Item>
       <Form.Item
         label="Password"
         name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
+        rules={validationSchema.Password}
       >
         <Input.Password type="Password" placeholder="password" />
       </Form.Item>
@@ -77,7 +98,7 @@ import { useDispatch } from 'react-redux';
         <Button className="login-btn" type="primary" htmlType="submit">
           Log in
         </Button>
-        Or <Link to="/registerPage">register now!</Link>
+        Or <Link to="/registerPage">register!</Link>
       </Form.Item>
     </Form>
   );

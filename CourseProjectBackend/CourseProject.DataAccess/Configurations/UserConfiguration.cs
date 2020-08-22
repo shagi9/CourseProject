@@ -25,6 +25,9 @@ namespace CourseProject.DataAccess.Configurations
             builder.Property(u => u.Email)
                 .IsRequired();
 
+            builder.Property(u => u.DateOfBirth)
+                .IsRequired();
+
             builder.HasData(
                 new User
                 {
@@ -34,7 +37,7 @@ namespace CourseProject.DataAccess.Configurations
                     UserName = "Shagi",
                     Email = "shagoferov@gmail.com",
                     PasswordHash = "password",
-                    Age = 23,
+                    DateOfBirth = new DateTime(1997, 8, 1),
                     RegistrationDate = DateTime.Now
                 },
                 new User
@@ -45,7 +48,7 @@ namespace CourseProject.DataAccess.Configurations
                     UserName = "Muzilko",
                     Email = "yurii@gmail.com",
                     PasswordHash = "password",
-                    Age = 21,
+                    DateOfBirth = new DateTime(1998, 8, 11),
                     RegistrationDate = DateTime.Now
                 });
         }

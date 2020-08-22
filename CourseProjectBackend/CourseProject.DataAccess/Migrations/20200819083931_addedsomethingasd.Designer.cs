@@ -4,14 +4,16 @@ using CourseProject.DataAccess.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CourseProject.DataAccess.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20200819083931_addedsomethingasd")]
+    partial class addedsomethingasd
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -85,31 +87,31 @@ namespace CourseProject.DataAccess.Migrations
                         {
                             UserId = 1,
                             CourseId = 1,
-                            StartDate = new DateTime(2020, 9, 4, 12, 0, 1, 470, DateTimeKind.Local).AddTicks(1613)
+                            StartDate = new DateTime(2020, 9, 3, 11, 39, 31, 90, DateTimeKind.Local).AddTicks(5567)
                         },
                         new
                         {
                             UserId = 1,
                             CourseId = 2,
-                            StartDate = new DateTime(2020, 9, 4, 12, 0, 1, 473, DateTimeKind.Local).AddTicks(2408)
+                            StartDate = new DateTime(2020, 9, 3, 11, 39, 31, 94, DateTimeKind.Local).AddTicks(3850)
                         },
                         new
                         {
                             UserId = 2,
                             CourseId = 2,
-                            StartDate = new DateTime(2020, 9, 4, 12, 0, 1, 473, DateTimeKind.Local).AddTicks(2455)
+                            StartDate = new DateTime(2020, 9, 3, 11, 39, 31, 94, DateTimeKind.Local).AddTicks(3910)
                         },
                         new
                         {
                             UserId = 2,
                             CourseId = 2,
-                            StartDate = new DateTime(2020, 9, 4, 12, 0, 1, 473, DateTimeKind.Local).AddTicks(2463)
+                            StartDate = new DateTime(2020, 9, 3, 11, 39, 31, 94, DateTimeKind.Local).AddTicks(3919)
                         },
                         new
                         {
                             UserId = 2,
                             CourseId = 3,
-                            StartDate = new DateTime(2020, 9, 4, 12, 0, 1, 473, DateTimeKind.Local).AddTicks(2467)
+                            StartDate = new DateTime(2020, 9, 3, 11, 39, 31, 94, DateTimeKind.Local).AddTicks(3924)
                         });
                 });
 
@@ -123,12 +125,12 @@ namespace CourseProject.DataAccess.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -204,8 +206,8 @@ namespace CourseProject.DataAccess.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2e9bf8d7-5d6b-4e4a-a156-673923cb59da",
-                            DateOfBirth = new DateTime(1997, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 23,
+                            ConcurrencyStamp = "16aafb3e-deb1-4169-8a55-b3d4319a059b",
                             Email = "shagoferov@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Ilya",
@@ -213,7 +215,7 @@ namespace CourseProject.DataAccess.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "password",
                             PhoneNumberConfirmed = false,
-                            RegistrationDate = new DateTime(2020, 8, 20, 12, 0, 1, 482, DateTimeKind.Local).AddTicks(8798),
+                            RegistrationDate = new DateTime(2020, 8, 19, 11, 39, 31, 102, DateTimeKind.Local).AddTicks(8790),
                             TwoFactorEnabled = false,
                             UserName = "Shagi"
                         },
@@ -221,8 +223,8 @@ namespace CourseProject.DataAccess.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "96ee8f22-e5c3-4ac1-bb4c-e4982e6d1dfb",
-                            DateOfBirth = new DateTime(1998, 8, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Age = 21,
+                            ConcurrencyStamp = "7652013c-6d9a-4bcd-a19b-c2c4cfe08a49",
                             Email = "yurii@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Yurii",
@@ -230,7 +232,7 @@ namespace CourseProject.DataAccess.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "password",
                             PhoneNumberConfirmed = false,
-                            RegistrationDate = new DateTime(2020, 8, 20, 12, 0, 1, 482, DateTimeKind.Local).AddTicks(8932),
+                            RegistrationDate = new DateTime(2020, 8, 19, 11, 39, 31, 102, DateTimeKind.Local).AddTicks(8930),
                             TwoFactorEnabled = false,
                             UserName = "Muzilko"
                         });
@@ -252,9 +254,14 @@ namespace CourseProject.DataAccess.Migrations
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("UserId1");
 
                     b.ToTable("UserRefreshTokens");
                 });
@@ -291,14 +298,14 @@ namespace CourseProject.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "56fd3ceb-3bb8-4d83-a0f4-57edfdca09dc",
+                            ConcurrencyStamp = "69918983-2555-4c6b-916b-684810410d53",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "fcca3027-aae9-465a-b976-86e36d127903",
+                            ConcurrencyStamp = "65c3b6aa-06ea-4202-94b8-9d0d5d5afdb0",
                             Name = "student",
                             NormalizedName = "STUDENT"
                         });
@@ -325,6 +332,58 @@ namespace CourseProject.DataAccess.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<int>", b =>
@@ -434,11 +493,15 @@ namespace CourseProject.DataAccess.Migrations
 
             modelBuilder.Entity("CourseProject.DataAccess.Entities.UserRefreshToken", b =>
                 {
-                    b.HasOne("CourseProject.DataAccess.Entities.User", "User")
+                    b.HasOne("CourseProject.DataAccess.Entities.User", null)
                         .WithMany("UserRefreshTokens")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>

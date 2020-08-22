@@ -1,4 +1,5 @@
 using AutoMapper;
+using CourseProject.BusinessLogic.Dto.AuthDto;
 using CourseProject.BusinessLogic.Services.Implementation;
 using CourseProject.BusinessLogic.Services.Interfaces;
 using CourseProject.DataAccess.DataContext;
@@ -34,9 +35,12 @@ namespace CourseProject.API
         {
             services.AddHttpClient();
 
-            services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IAuthService, AuthService>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+
+            services.AddTransient<IEmailService, EmailService>();
+            services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IAuthService, AuthService>();
 
             services.AddDbContext<DBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),

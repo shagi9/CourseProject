@@ -17,8 +17,10 @@ namespace CourseProject.DataAccess.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ProfileImage { get; set; }
-        public int Age { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public DateTime RegistrationDate { get; set; }
+        
+        public List<UserRefreshToken> UserRefreshTokens { get; set; }
         public List<CourseToUser> CourseToStudents {get; set;}
     }
 }

@@ -11,6 +11,6 @@ namespace CourseProject.BusinessLogic.Dto.AuthDto
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string UserName { get; set; }
-        public int Age { get; set; }
+        public DateTime DateOfBirth { get; set; }
     }
 }
