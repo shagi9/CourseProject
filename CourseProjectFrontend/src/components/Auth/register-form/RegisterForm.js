@@ -11,6 +11,8 @@ import {
 } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { postRequest } from '../../../helpers/axios_requests';
+import { firstAndLastNameRegValidator, 
+  userNameRexValidator, dateOfBirthValidator } from '../../../helpers/validation';
 
  const formItemLayout = {
    labelCol: {
@@ -42,13 +44,24 @@ import { postRequest } from '../../../helpers/axios_requests';
     ],
    Password: [
      { required: true, message: "The password field is required"},
-     { min: 8, message: "Minimum length is 6 characters"}
-   ],
-   FirstName: [{ required: true, message: "The firstname field is required"}],
-   LastName: [{ required: true, message: "The lastname field is required"}],
-   UserName: [{ required: true, message: "The username field is required", whitespace: true}],
-   DateOfBirth: [{ required: true, message: "The dateofbirth field is required"}],
- }
+     { min: 8, message: "Minimum length is 8 characters"},
+     { max: 128, message: "Password is to long"}
+    ],
+   FirstName: [{ required: true, message: "The firstname field is required"}, 
+     { validator: firstAndLastNameRegValidator}
+    ],
+   LastName: [{ required: true, message: "The lastname field is required"}, 
+     { validator: firstAndLastNameRegValidator}
+    ],
+   UserName: [{ required: true, message: "The username field is required", whitespace: true},
+    { min: 8, message: "Minimum length is 8 characters"},
+    { max: 20, message: "Username is to long"},
+    { validator: userNameRexValidator} 
+    ],
+   DateOfBirth: [{ required: true, message: "The dateofbirth field is required"},
+    { validator: dateOfBirthValidator}
+   ]
+ };
 
 export const RegisterForm = () => {
   const [responseStatus, setResponseStatus] = useState({
@@ -65,7 +78,7 @@ export const RegisterForm = () => {
       console.log(data);
       setResponseStatus({
         message: data,
-        discriptions:
+        descriptions:
           "Please confirm your email before start using the application.",
         type: "success",
         finished: true,
@@ -129,7 +142,7 @@ export const RegisterForm = () => {
 
       <Form.Item
         name="firstName"
-        label="FirstName"
+        label="First Name"
         rules={validationSchema.FirstName}
       >
         <Input />
@@ -137,7 +150,7 @@ export const RegisterForm = () => {
 
       <Form.Item
         name="lastName"
-        label="LastName"
+        label="Last Name"
         rules={validationSchema.LastName}
       >
         <Input />

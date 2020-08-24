@@ -22,13 +22,19 @@ namespace CourseProject.API.Validators.AuthValidators
                 .Length(5, 25);
 
             RuleFor(f => f.FirstName)
-                .NotEmpty();
+                .NotEmpty()
+                .Length(2, 20)
+                .Matches("^[a-zA-Z0-9]+$");
 
             RuleFor(l => l.LastName)
-                .NotEmpty();
+                .NotEmpty()
+                .Length(2, 20)
+                .Matches("^[a-zA-Z0-9]+$");
 
             RuleFor(n => n.UserName)
-                .NotEmpty();
+                .NotEmpty()
+                .Length(2, 20)
+                .Matches("^[a-zA-Z0-9]+$");
 
             RuleFor(a => a.DateOfBirth)
                 .NotEmpty();

@@ -140,7 +140,9 @@ namespace CourseProject.BusinessLogic.Services.Implementation
 
                 var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
 
-                string confirmationLink = $"https://localhost:5001/confirmation/{newUser.Id}/{confirmationToken}";
+                confirmationToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
+
+                string confirmationLink = $"http://localhost:3000/confirmation/{newUser.Id}/{confirmationToken}";
 
                 await _emailService.SendEmailAsync(newUser.Email,
                     "Registration Successful",
@@ -160,7 +162,9 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             {
                 return IdentityResult.Failed();
             }
-          
+
+            token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
+
             var result = await _userManager.ConfirmEmailAsync(user, token);
             return result;
         }

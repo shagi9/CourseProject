@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { set } from 'js-cookie';
+import { getCookies, set } from 'js-cookie';
 import './LoginForm.css';
 import { postRequest, getRequest } from '../../../helpers/axios_requests';
 import { Form, Input, Checkbox, Button } from 'antd';
@@ -21,7 +21,8 @@ import { useDispatch } from 'react-redux';
 
     const errorsSchema = {
       username: ["username is invalid"],
-      password: ["Password is invalid"]
+      password: ["Password is invalid"],
+      confirmEmail: ["Please, confirm your email before start using the application."]
     }
 
     const validationSchema = {
@@ -35,9 +36,9 @@ import { useDispatch } from 'react-redux';
     
     const onFinish = async values => {
       const { status, data } = await postRequest('/auth/login', values);
-      if(status === 200) {
-        if(data.token != null){
-          if(data.refreshToken != null){
+      if (status === 200) {
+        if (data.token != null){
+          if (data.refreshToken != null){
           set('refreshToken', data.refreshToken);  
           set('token', data.token);
           
@@ -48,7 +49,16 @@ import { useDispatch } from 'react-redux';
         }
       }
     }
-      else {
+    if (status === 404) {
+      if (!data.isEmailConfirmed) {
+        form.setFields([{
+          name: 'login',
+          value: values.login,
+          errors: errorsSchema.confirmEmail
+        }]);
+      }
+    }
+    if (status === 400) {
         form.setFields([
         {
           name: 'login',

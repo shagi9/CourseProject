@@ -59,6 +59,7 @@ namespace CourseProject.API
                 options.Password.RequireUppercase = false;
                 options.User.RequireUniqueEmail = true;
                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                options.SignIn.RequireConfirmedEmail = true;
             });
 
             services.AddCors(options =>

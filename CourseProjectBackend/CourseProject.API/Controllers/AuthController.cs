@@ -27,15 +27,16 @@ namespace CourseProject.API.Controllers
         {
             var response = await _authService.Login(loginViewModel);
 
-            if (response.IsEmailConfirmed == false)
-            {
-                return BadRequest("Your email is not confirmed");
-            }
-
             if (response == null)
             {
                 return BadRequest("Invalid username or password");
             }
+            
+            if (response.IsEmailConfirmed == false)
+            {
+                return NotFound("Please, confirm your email");
+            }
+
             return Ok(response);
         }
 
@@ -43,6 +44,7 @@ namespace CourseProject.API.Controllers
         public async Task<ActionResult<RefreshTokenViewModel>> RefreshToken(RefreshTokenViewModel token)
         {
             var response = await _authService.RefreshToken(token);
+
             if (response == null)
             {
                 return Unauthorized("You are not unathorized");
