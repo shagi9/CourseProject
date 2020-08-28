@@ -5,6 +5,7 @@ using CourseProject.BusinessLogic.Services.Interfaces;
 using CourseProject.DataAccess.DataContext;
 using CourseProject.DataAccess.Entities;
 using FluentValidation.AspNetCore;
+using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -18,6 +19,7 @@ using Microsoft.OpenApi.Models;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Templates;
 
 namespace CourseProject.API
 {
@@ -37,10 +39,15 @@ namespace CourseProject.API
 
             services.Configure<AuthMessageSenderOptions>(Configuration);
 
+            services.AddTransient<IRazorViewToStringRenderer, RazorViewToStringRenderer>();
+            services.AddTransient<IBackgroundEmailSender, BackgroundEmailSender>();
+            services.AddTransient<ICourseService, CourseService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthService, AuthService>();
+
+            services.AddRazorPages();
 
             services.AddDbContext<DBContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"),
@@ -116,6 +123,9 @@ namespace CourseProject.API
                 typeof(BusinessLogic.MapperProfilers.MappingProfile).GetTypeInfo().Assembly
                 });
 
+            services.AddHangfire(h => h.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddHangfireServer();
+
             services.AddControllers().AddFluentValidation(f => 
                 f.RegisterValidatorsFromAssemblyContaining<Startup>()); 
         }
@@ -139,6 +149,8 @@ namespace CourseProject.API
             app.UseCors("CorsPolicy");
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseHangfireDashboard();
             
             app.UseEndpoints(endpoints =>
             {

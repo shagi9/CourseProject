@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CourseProject.BusinessLogic.Dto.AuthDto;
+using CourseProject.BusinessLogic.Vm;
 using CourseProject.BusinessLogic.Services.Interfaces;
 using CourseProject.DataAccess.DataContext;
 using CourseProject.DataAccess.Entities;
@@ -15,34 +15,40 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using CourseProject.BusinessLogic.Dto.AuthDto;
+using Templates;
+using Templates.ViewModels;
 
 namespace CourseProject.BusinessLogic.Services.Implementation
 {
     public class AuthService : IAuthService
     {
-        private readonly DBContext _context;
-        private readonly IMapper _mapper;
-        private readonly UserManager<User> _userManager;
-        private readonly ITokenService _tokenService;
-        private readonly IEmailService _emailService;
-        public string tokenToReturn;
+        private readonly DBContext context;
+        private readonly IMapper mapper;
+        private readonly UserManager<User> userManager;
+        private readonly ITokenService tokenService;
+        private readonly IEmailService emailService;
+        private readonly IRazorViewToStringRenderer razorViewToStringRenderer;
+        const string view = "/Views/Emails/ConfirmAccountEmail";
 
         public AuthService(DBContext context, UserManager<User> userManager, 
-            ITokenService tokenService, IMapper mapper, IEmailService emailService)
+            ITokenService tokenService, IMapper mapper, 
+            IEmailService emailService, IRazorViewToStringRenderer razorViewToStringRenderer)
         {
-            _context = context;
-            _mapper = mapper;
-            _userManager = userManager;
-            _tokenService = tokenService;
-            _emailService = emailService;
+            this.context = context;
+            this.mapper = mapper;
+            this.userManager = userManager;
+            this.tokenService = tokenService;
+            this.emailService = emailService;
+            this.razorViewToStringRenderer = razorViewToStringRenderer;
         }
         public async Task<LoginViewModel> Login(LoginDto loginModel)
         {
-            var user = await _userManager.FindByEmailAsync(loginModel.Login);
+            var user = await userManager.FindByEmailAsync(loginModel.Login);
 
-            if (user != null && await _userManager.CheckPasswordAsync(user, loginModel.Password))
+            if (user != null && await userManager.CheckPasswordAsync(user, loginModel.Password))
             {
-                var emailConfirmationStatus = await _userManager.IsEmailConfirmedAsync(user);
+                var emailConfirmationStatus = await userManager.IsEmailConfirmedAsync(user);
                 
                 if (!emailConfirmationStatus)
                 {
@@ -52,7 +58,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
                     };
                 }
 
-                var userRoles = await _userManager.GetRolesAsync(user);
+                var userRoles = await userManager.GetRolesAsync(user);
 
                 var claims = new List<Claim>
                 {
@@ -61,16 +67,16 @@ namespace CourseProject.BusinessLogic.Services.Implementation
                     new Claim(ClaimTypes.Name, user.UserName),
                 };
 
-                var token = _tokenService.GenerateJWT(claims);
+                var token = tokenService.GenerateJWT(claims);
 
-                var refreshToken = _tokenService.GenerateRefreshToken();
-                await _context.UserRefreshTokens.AddAsync(new UserRefreshToken
+                var refreshToken = tokenService.GenerateRefreshToken();
+                await context.UserRefreshTokens.AddAsync(new UserRefreshToken
                 {
                     UserId = user.Id,
                     RefreshToken = refreshToken,
                     Expires = DateTime.UtcNow.AddMonths(1)
                 });
-                await _context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return new LoginViewModel
                 {
                     Token = token,
@@ -89,7 +95,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             string accessToken = token.Token;
             string refreshToken = token.RefreshToken;
 
-            var principal = _tokenService.GetPrincipalFromExpiredToken(accessToken);
+            var principal = tokenService.GetPrincipalFromExpiredToken(accessToken);
 
             var userIdStr = principal.FindFirst(ClaimTypes.NameIdentifier).Value;
 
@@ -100,55 +106,59 @@ namespace CourseProject.BusinessLogic.Services.Implementation
 
             var userId = int.Parse(userIdStr);
 
-            var userRefreshToken = await _context.UserRefreshTokens
-                .SingleOrDefaultAsync(u => u.UserId == userId && u.RefreshToken == refreshToken);
+            var userRefreshToken = await context.UserRefreshTokens
+                .SingleOrDefaultAsync(user => user.UserId == userId && user.RefreshToken == refreshToken);
 
             if (userRefreshToken == null)
             {
                 throw new SecurityTokenException("Invalid refresh token");
             }
 
-            _context.UserRefreshTokens.Remove(userRefreshToken);
+            context.UserRefreshTokens.Remove(userRefreshToken);
 
             if (userRefreshToken.Expires < DateTime.UtcNow)
             {
                 throw new SecurityTokenException("Token is expired");
             }
 
-            var newJwtToken = _tokenService.GenerateJWT(principal.Claims);
-            var newRefreshToken = _tokenService.GenerateRefreshToken();
+            var newJwtToken = tokenService.GenerateJWT(principal.Claims);
+            var newRefreshToken = tokenService.GenerateRefreshToken();
 
-            await _context.UserRefreshTokens.AddAsync(new UserRefreshToken
+            await context.UserRefreshTokens.AddAsync(new UserRefreshToken
             {
                 UserId = userId,
                 RefreshToken = newRefreshToken,
                 Expires = DateTime.UtcNow.AddMonths(1)
             });
-            await _context.SaveChangesAsync();
+            await context.SaveChangesAsync();
             return new RefreshTokenViewModel(newJwtToken, newRefreshToken);
         }
 
         public async Task<IdentityResult> Register(RegisterDto registerDto)
         {
-            var newUser = _mapper.Map<User>(registerDto);
+            var newUser = mapper.Map<User>(registerDto);
 
-            var res = await _userManager.CreateAsync(newUser, registerDto.Password);
+            var res = await userManager.CreateAsync(newUser, registerDto.Password);
 
             if (res.Succeeded)
             {
-                await _userManager.AddToRoleAsync(newUser, "student");
+                await userManager.AddToRoleAsync(newUser, "student");
 
-                var confirmationToken = await _userManager.GenerateEmailConfirmationTokenAsync(newUser);
+                var confirmationToken = await userManager.GenerateEmailConfirmationTokenAsync(newUser);
 
                 confirmationToken = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(confirmationToken));
 
                 string confirmationLink = $"http://localhost:3000/confirmation/{newUser.Id}/{confirmationToken}";
 
-                await _emailService.SendEmailAsync(newUser.Email,
-                    "Registration Successful",
-                    $"<h1>Hello, {newUser.UserName}</h1>" +
-                    $"<h2>Before you can Login,<br>Please confirm your email by clicking on the <a href='{confirmationLink}'>link</a> and start learning!</h2>" +
-                    "<h2>Have a nice day.</h2>");
+                var confirmAccount = new ConfirmAccountEmailViewModel(confirmationLink);
+
+                var toAddresses = newUser.Email;
+
+                string body = await razorViewToStringRenderer.RenderViewToStringAsync($"{view}.cshtml", confirmAccount);
+
+                await emailService.SendEmailAsync(toAddresses,
+                    "Registration To The Course Project",
+                   body);
             }
 
             return res;
@@ -156,7 +166,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
 
         public async Task<IdentityResult> VerifyEmail(string userId, string token)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await userManager.FindByIdAsync(userId);
             
             if (user == null || token == null)
             {
@@ -165,7 +175,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
 
             token = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(token));
 
-            var result = await _userManager.ConfirmEmailAsync(user, token);
+            var result = await userManager.ConfirmEmailAsync(user, token);
             return result;
         }
     }

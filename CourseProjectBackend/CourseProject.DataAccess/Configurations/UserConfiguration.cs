@@ -11,7 +11,7 @@ namespace CourseProject.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasMany(u => u.CourseToStudents)
+            builder.HasMany(u => u.CourseToUsers)
                 .WithOne(u => u.User);
 
             builder.Property(u => u.FirstName)

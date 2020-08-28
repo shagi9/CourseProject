@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CourseProject.BusinessLogic.Dto.AuthDto;
 using CourseProject.BusinessLogic.Services.Interfaces;
+using CourseProject.BusinessLogic.Vm;
 using CourseProject.DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,17 +16,17 @@ namespace CourseProject.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _authService;
+        private readonly IAuthService authService;
 
         public AuthController(IAuthService authService)
         {
-            _authService = authService;
+            this.authService = authService;
         }
 
         [HttpPost("login")]
         public async Task<ActionResult<LoginViewModel>> Login([FromBody] LoginDto loginViewModel)
         {
-            var response = await _authService.Login(loginViewModel);
+            var response = await authService.Login(loginViewModel);
 
             if (response == null)
             {
@@ -43,7 +44,7 @@ namespace CourseProject.API.Controllers
         [HttpPost("refresh-token")]
         public async Task<ActionResult<RefreshTokenViewModel>> RefreshToken(RefreshTokenViewModel token)
         {
-            var response = await _authService.RefreshToken(token);
+            var response = await authService.RefreshToken(token);
 
             if (response == null)
             {
@@ -57,7 +58,7 @@ namespace CourseProject.API.Controllers
         [HttpPost("register")]
         public async Task<ActionResult<RegisterDto>> Register([FromBody] RegisterDto user)
         {
-            var createdUser = await _authService.Register(user);
+            var createdUser = await authService.Register(user);
 
             if (!createdUser.Succeeded)
             {
@@ -70,7 +71,7 @@ namespace CourseProject.API.Controllers
         [HttpGet("verifyEmail")]
         public async Task<ActionResult<IdentityResult>> VerifyEmail(string userId, string token)
         {
-            var response = await _authService.VerifyEmail(userId, token);
+            var response = await authService.VerifyEmail(userId, token);
 
             if (!response.Succeeded)
             {

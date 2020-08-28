@@ -9,12 +9,15 @@ namespace CourseProject.DataAccess.Entities
     {
         public Course()
         {
-            CourseToStudents = new List<CourseToUser>();
+            CourseToUsers = new List<CourseToUser>();
         }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Image { get; set; }
-        public List<CourseToUser> CourseToStudents { get; set; }
+        public string ImgUrl { get; set; }
+
+        public int UserId { get; set; }
+        public User User { get; set; }
+        public List<CourseToUser> CourseToUsers { get; set; }
 
     }
 }

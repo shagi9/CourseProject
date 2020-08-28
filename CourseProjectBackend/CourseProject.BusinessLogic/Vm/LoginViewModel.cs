@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Security.Policy;
 using System.Text;
 
-namespace CourseProject.BusinessLogic.Dto.AuthDto
+namespace CourseProject.BusinessLogic.Vm
 {
     public class LoginViewModel
     {

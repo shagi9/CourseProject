@@ -8,15 +8,20 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Templates;
 
 namespace CourseProject.BusinessLogic.Services.Implementation
 {
     public class EmailService : IEmailService
     {
-        public EmailService(IOptions<AuthMessageSenderOptions> optionsAccessor)
+        public EmailService(IOptions<AuthMessageSenderOptions> optionsAccessor, 
+            IRazorViewToStringRenderer renderer)
         {
+            this.renderer = renderer;
             Options = optionsAccessor.Value;
         }
+
+        private IRazorViewToStringRenderer renderer;
 
         public AuthMessageSenderOptions Options { get; }
 
@@ -34,6 +39,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message
+                
             };
             msg.AddTo(new EmailAddress(email));
 

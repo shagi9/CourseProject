@@ -14,15 +14,15 @@ namespace CourseProject.BusinessLogic.Services.Implementation
 {
     public class TokenService : ITokenService
     {
-        public readonly IConfiguration _config;
+        public readonly IConfiguration config;
         public TokenService(IConfiguration config)
         {
-            _config = config;
+            this.config = config;
         }
         public string GenerateJWT(IEnumerable<Claim> claims)
         {
             SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(_config.GetSection("AppSettings:Token").Value));
+                .GetBytes(config.GetSection("AppSettings:Token").Value));
 
             SigningCredentials credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
 
@@ -58,7 +58,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
                 ValidateIssuer = false,
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
-                .GetBytes(_config.GetSection("AppSettings:Token").Value)),
+                .GetBytes(config.GetSection("AppSettings:Token").Value)),
                 ValidateLifetime = false //here we are saying that we don't care about the token's expiration date
             };
             var tokenHandler = new JwtSecurityTokenHandler();

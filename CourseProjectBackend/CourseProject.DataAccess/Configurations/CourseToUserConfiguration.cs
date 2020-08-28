@@ -11,40 +11,31 @@ namespace CourseProject.DataAccess.Configurations
     {
         public void Configure(EntityTypeBuilder<CourseToUser> builder)
         {
-            builder.HasKey(x => new { x.UserId, x.CourseId, x.StartDate });
-            builder.HasOne(u => u.User).WithMany(c => c.CourseToStudents).HasForeignKey(c => c.UserId);
-            builder.HasOne(c => c.Course).WithMany(u => u.CourseToStudents).HasForeignKey(c => c.CourseId);
+            builder.HasKey(x => new { x.CourseId, x.UserId });
+
+            builder.HasOne(x => x.Course)
+                .WithMany(x => x.CourseToUsers)
+                .HasForeignKey(x => x.CourseId);
+
+            builder.HasOne(x => x.User)
+                .WithMany(x => x.CourseToUsers)
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasData(
                 new CourseToUser
                 {
-                    UserId = 1,
+                    UserId = 2,
                     CourseId = 1,
-                    StartDate = DateTime.Now.AddDays(15)
-                },
-                new CourseToUser
-                {
-                    UserId = 1,
-                    CourseId = 2,
-                    StartDate = DateTime.Now.AddDays(15)
+                    StartDate = DateTime.Now.AddDays(15),
+                    EndDate = DateTime.Now.AddDays(30)
                 },
                 new CourseToUser
                 {
                     UserId = 2,
                     CourseId = 2,
-                    StartDate = DateTime.Now.AddDays(15)
-                },
-                new CourseToUser
-                {
-                    UserId = 2,
-                    CourseId = 2,
-                    StartDate = DateTime.Now.AddDays(15)
-                },
-                new CourseToUser
-                {
-                    UserId = 2,
-                    CourseId = 3,
-                    StartDate = DateTime.Now.AddDays(15)
+                    StartDate = DateTime.Now.AddDays(15),
+                    EndDate = DateTime.Now.AddDays(30)
                 });
         }
     }

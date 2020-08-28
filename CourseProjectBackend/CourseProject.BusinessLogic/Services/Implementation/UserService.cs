@@ -12,19 +12,19 @@ namespace CourseProject.BusinessLogic.Services.Implementation
 {
     public class UserService : IUserService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly IMapper _mapper;
+        private readonly UserManager<User> userManager;
+        private readonly IMapper mapper;
 
         public UserService(UserManager<User> userManager, IMapper mapper)
         {
-            _userManager = userManager;
-            _mapper = mapper;
+            this.userManager = userManager;
+            this.mapper = mapper;
         }
         public async Task<GetAutorizedUserDto> GetAutorizedByUser(string userId, string role)
         {
-            var findUser = await _userManager.FindByIdAsync(userId);
+            var findUser = await userManager.FindByIdAsync(userId);
 
-            var response = _mapper.Map<GetAutorizedUserDto>(findUser);
+            var response = mapper.Map<GetAutorizedUserDto>(findUser);
 
             response.Role = role;
 

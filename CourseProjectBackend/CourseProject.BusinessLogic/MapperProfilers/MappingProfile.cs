@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using CourseProject.BusinessLogic.Dto.AuthDto;
+using CourseProject.BusinessLogic.Dto.CourseDto;
+using CourseProject.BusinessLogic.Vm;
 using CourseProject.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
@@ -13,10 +15,17 @@ namespace CourseProject.BusinessLogic.MapperProfilers
         public MappingProfile()
         {
             CreateMap<RegisterDto, User>()
-                .ForMember(u => u.UserName, opt => opt.MapFrom(u => u.UserName));
+                .ForMember(user => user.UserName, opt => opt.MapFrom(user => user.UserName));
 
             CreateMap<User, GetAutorizedUserDto>()
-                .ForMember(u => u.UserName, opt => opt.MapFrom(u => u.UserName));
+                .ForMember(user => user.UserName, opt => opt.MapFrom(user => user.UserName));
+
+            CreateMap<Course, CourseViewModel>();
+
+            CreateMap<CourseToUser, SubscribeToCourseViewModel>();
+
+            CreateMap<SubscribeToCourseDto, CourseToUser>()
+                .ForMember(course => course.EndDate, opt => opt.MapFrom(course => course.StartDate.AddDays(14)));
         }
     }
 }

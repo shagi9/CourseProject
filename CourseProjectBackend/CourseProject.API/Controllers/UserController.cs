@@ -17,13 +17,13 @@ namespace CourseProject.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly UserManager<User> _userManager;
-        private readonly IUserService _service;
+        private readonly UserManager<User> userManager;
+        private readonly IUserService service;
 
         public UserController(UserManager<User> userManager, IUserService service)
         {
-            _userManager = userManager;
-            _service = service;
+            this.userManager = userManager;
+            this.service = service;
         }
 
         [Authorize]
@@ -33,7 +33,7 @@ namespace CourseProject.API.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var role = User.FindFirstValue(ClaimTypes.Role);
 
-            var response = await _service.GetAutorizedByUser(userId, role);
+            var response = await service.GetAutorizedByUser(userId, role);
             
             return Ok(response);
         }

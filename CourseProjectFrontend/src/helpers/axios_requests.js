@@ -3,22 +3,6 @@ import { get as getCookies, set } from 'js-cookie';
 
 import { api } from './url';
 
-  // const getRefreshToken = async values => {
-  //   const token = getCookies('token');
-  //   const refreshToken = getCookies('refreshToken');
-  //   if (typeof(token) != 'undefined' && typeof(refreshToken) != 'undefined') {
-  //     const { status, data } = await postRequest('/auth/refresh-token', values);
-  //     return {
-  //     }
-  //   }
-  // }
-  
-
-//const { status, data } = await postRequest('/auth/refresh-token', { token, refreshToken});
-    //if(status === 200){
-      //set('refreshToken', token);  
-      //set('token', refreshToken);
-
 const getHeaders = () => {
   const token = getCookies('token');
   const refreshToken = getCookies('refreshToken');

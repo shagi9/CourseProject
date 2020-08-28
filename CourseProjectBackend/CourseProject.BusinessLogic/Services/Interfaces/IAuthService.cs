@@ -1,4 +1,5 @@
 ﻿using CourseProject.BusinessLogic.Dto.AuthDto;
+using CourseProject.BusinessLogic.Vm;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CourseProject.DataAccess.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20200819090448_sasdas")]
-    partial class sasdas
+    [Migration("20200826085131_addedHangfire")]
+    partial class addedHangfire
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,13 +31,18 @@ namespace CourseProject.DataAccess.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
+                    b.Property<string>("ImgUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Courses");
 
@@ -46,72 +51,62 @@ namespace CourseProject.DataAccess.Migrations
                         {
                             Id = 1,
                             Description = "his is a complete project based course from start to finish with real world experience using technologies that are currently in demand in the market. People interested in learning latest technologies should consider this course",
-                            Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/.NET_Logo.svg/1200px-.NET_Logo.svg.png",
-                            Name = "Build an app with ASPNET Core and Angular from scratch"
+                            ImgUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/.NET_Logo.svg/1200px-.NET_Logo.svg.png",
+                            Name = "Build an app with ASPNET Core and Angular from scratch",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 2,
                             Description = "his is a complete project based course from start to finish with real world experience using technologies that are currently in demand in the market. People interested in learning latest technologies should consider this course",
-                            Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/.NET_Logo.svg/1200px-.NET_Logo.svg.png",
-                            Name = "Build an app with ASPNET Core and Angular from scratch"
+                            ImgUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/.NET_Logo.svg/1200px-.NET_Logo.svg.png",
+                            Name = "Build an app with ASPNET Core and Angular from scratch",
+                            UserId = 1
                         },
                         new
                         {
                             Id = 3,
                             Description = "his is a complete project based course from start to finish with real world experience using technologies that are currently in demand in the market. People interested in learning latest technologies should consider this course",
-                            Image = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/.NET_Logo.svg/1200px-.NET_Logo.svg.png",
-                            Name = "Build an app with ASPNET Core and Angular from scratch"
+                            ImgUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/.NET_Logo.svg/1200px-.NET_Logo.svg.png",
+                            Name = "Build an app with ASPNET Core and Angular from scratch",
+                            UserId = 1
                         });
                 });
 
             modelBuilder.Entity("CourseProject.DataAccess.Entities.CourseToUser", b =>
                 {
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("UserId", "CourseId", "StartDate");
+                    b.HasKey("CourseId", "UserId");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("CoursesToUsers");
 
                     b.HasData(
                         new
                         {
-                            UserId = 1,
                             CourseId = 1,
-                            StartDate = new DateTime(2020, 9, 3, 12, 4, 48, 182, DateTimeKind.Local).AddTicks(3926)
-                        },
-                        new
-                        {
-                            UserId = 1,
-                            CourseId = 2,
-                            StartDate = new DateTime(2020, 9, 3, 12, 4, 48, 185, DateTimeKind.Local).AddTicks(6915)
-                        },
-                        new
-                        {
                             UserId = 2,
-                            CourseId = 2,
-                            StartDate = new DateTime(2020, 9, 3, 12, 4, 48, 185, DateTimeKind.Local).AddTicks(6962)
+                            EndDate = new DateTime(2020, 9, 25, 11, 51, 30, 553, DateTimeKind.Local).AddTicks(3960),
+                            StartDate = new DateTime(2020, 9, 10, 11, 51, 30, 548, DateTimeKind.Local).AddTicks(5457)
                         },
                         new
                         {
-                            UserId = 2,
                             CourseId = 2,
-                            StartDate = new DateTime(2020, 9, 3, 12, 4, 48, 185, DateTimeKind.Local).AddTicks(6969)
-                        },
-                        new
-                        {
                             UserId = 2,
-                            CourseId = 3,
-                            StartDate = new DateTime(2020, 9, 3, 12, 4, 48, 185, DateTimeKind.Local).AddTicks(6972)
+                            EndDate = new DateTime(2020, 9, 25, 11, 51, 30, 553, DateTimeKind.Local).AddTicks(4768),
+                            StartDate = new DateTime(2020, 9, 10, 11, 51, 30, 553, DateTimeKind.Local).AddTicks(4741)
                         });
                 });
 
@@ -125,12 +120,12 @@ namespace CourseProject.DataAccess.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("int");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateOfBirth")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -173,9 +168,6 @@ namespace CourseProject.DataAccess.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ProfileImage")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("RegistrationDate")
                         .HasColumnType("datetime2");
 
@@ -206,8 +198,8 @@ namespace CourseProject.DataAccess.Migrations
                         {
                             Id = 1,
                             AccessFailedCount = 0,
-                            Age = 23,
-                            ConcurrencyStamp = "9eca9be2-b1c8-4e5b-972c-a69cbdf2190d",
+                            ConcurrencyStamp = "23af3e19-43ad-4cc0-b738-ecd1a723c2ff",
+                            DateOfBirth = new DateTime(1997, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "shagoferov@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Ilya",
@@ -215,7 +207,7 @@ namespace CourseProject.DataAccess.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "password",
                             PhoneNumberConfirmed = false,
-                            RegistrationDate = new DateTime(2020, 8, 19, 12, 4, 48, 196, DateTimeKind.Local).AddTicks(1980),
+                            RegistrationDate = new DateTime(2020, 8, 26, 11, 51, 30, 564, DateTimeKind.Local).AddTicks(6950),
                             TwoFactorEnabled = false,
                             UserName = "Shagi"
                         },
@@ -223,8 +215,8 @@ namespace CourseProject.DataAccess.Migrations
                         {
                             Id = 2,
                             AccessFailedCount = 0,
-                            Age = 21,
-                            ConcurrencyStamp = "fa681689-4277-47c6-9ad1-ea689c7d567d",
+                            ConcurrencyStamp = "033c2181-e7bf-4378-bebd-b210f5bc456e",
+                            DateOfBirth = new DateTime(1998, 8, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "yurii@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Yurii",
@@ -232,7 +224,7 @@ namespace CourseProject.DataAccess.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "password",
                             PhoneNumberConfirmed = false,
-                            RegistrationDate = new DateTime(2020, 8, 19, 12, 4, 48, 196, DateTimeKind.Local).AddTicks(2101),
+                            RegistrationDate = new DateTime(2020, 8, 26, 11, 51, 30, 564, DateTimeKind.Local).AddTicks(7070),
                             TwoFactorEnabled = false,
                             UserName = "Muzilko"
                         });
@@ -293,14 +285,14 @@ namespace CourseProject.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "830b97d2-dae5-426b-b7ee-97ed4dc2c79b",
+                            ConcurrencyStamp = "3c234326-cc3a-48ff-b35a-f736495bc6f0",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "7fc86564-fda7-4ac0-a87a-5773435abad3",
+                            ConcurrencyStamp = "c06371c6-0f9c-47cf-823f-3c89f98416b0",
                             Name = "student",
                             NormalizedName = "STUDENT"
                         });
@@ -419,18 +411,27 @@ namespace CourseProject.DataAccess.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("CourseProject.DataAccess.Entities.Course", b =>
+                {
+                    b.HasOne("CourseProject.DataAccess.Entities.User", "User")
+                        .WithMany("Courses")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("CourseProject.DataAccess.Entities.CourseToUser", b =>
                 {
                     b.HasOne("CourseProject.DataAccess.Entities.Course", "Course")
-                        .WithMany("CourseToStudents")
+                        .WithMany("CourseToUsers")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CourseProject.DataAccess.Entities.User", "User")
-                        .WithMany("CourseToStudents")
+                        .WithMany("CourseToUsers")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
