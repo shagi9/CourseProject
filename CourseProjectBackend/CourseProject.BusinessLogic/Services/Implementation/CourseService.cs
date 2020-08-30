@@ -5,6 +5,7 @@ using CourseProject.BusinessLogic.Services.Interfaces;
 using CourseProject.BusinessLogic.Vm;
 using CourseProject.DataAccess.DataContext;
 using CourseProject.DataAccess.Entities;
+using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -93,25 +94,24 @@ namespace CourseProject.BusinessLogic.Services.Implementation
 
         public void ScheduledDate(string email, DateTime startDate, string courseName, string userName)
         {
-            var scheduledDay = startDate.AddDays(-1).Add(new TimeSpan(8, 0, 0));
-            var scheduledWeek = startDate.AddDays(-7);
-            var scheduledMonth = startDate.AddMonths(-1);
+            var dayDate = startDate.AddDays(-1).Add(new TimeSpan(8, 0, 0));
+            var weekDate = startDate.AddDays(-7);
+            var monthDate = startDate.AddMonths(-1);
 
-            if (scheduledDay > DateTime.Today.Add(new TimeSpan(8, 0, 0)))
+            if (weekDate > DateTime.Today)
             {
-                backgroundEmailSender.ScheduledDay(email, startDate, courseName, userName);
+                backgroundEmailSender.ScheduledWeek(email, weekDate, courseName, userName);
             }
 
-            if (scheduledWeek > DateTime.Today)
+            if (dayDate > DateTime.Today.Add(new TimeSpan(8, 0, 0)))
             {
-                backgroundEmailSender.ScheduledWeek(email, startDate, courseName, userName);
+                backgroundEmailSender.ScheduledDay(email, dayDate, courseName, userName);
             }
 
-            if (scheduledMonth > DateTime.Today)
+            if (monthDate > DateTime.Today)
             {
-                backgroundEmailSender.ScheduledMonth(email, startDate, courseName, userName);
+                backgroundEmailSender.ScheduledMonth(email, monthDate, courseName, userName);
             }
-            
         }
     }
 }

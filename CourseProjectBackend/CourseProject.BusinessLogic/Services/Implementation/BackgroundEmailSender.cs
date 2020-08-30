@@ -24,34 +24,34 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             this.renderer = razorViewToStringRenderer;
         }
 
-        public async Task ScheduledDay(string email, DateTime startDate, string courseName, string userName)
+        public async Task ScheduledDay(string email, DateTime dayDate, string courseName, string userName)
         {
-            var model = new ScheduleViewModel(courseName, userName, startDate.ToString("dd/MM/yyyy"));
+            var model = new ScheduleViewModel(courseName, userName, dayDate.ToString("dd/MM/yyyy"));
 
             string body = await renderer.RenderViewToStringAsync($"{dayView}.cshtml", model);
             
             BackgroundJob.Schedule(() =>
-            emailService.SendEmailAsync(email, "Day Course notification", body), startDate - DateTime.Today - DateTime.Now.TimeOfDay);
+            emailService.SendEmailAsync(email, "Day Course notification", body), dayDate - DateTime.Today - DateTime.Now.TimeOfDay);
         }
 
-        public async Task ScheduledWeek(string email, DateTime startDate, string courseName, string userName)
+        public async Task ScheduledWeek(string email, DateTime weekDate, string courseName, string userName)
         {
-            var model = new ScheduleViewModel(courseName, userName, startDate.ToString("dd/MM/yyyy"));
+            var model = new ScheduleViewModel(courseName, userName, weekDate.ToString("dd/MM/yyyy"));
 
             string body = await renderer.RenderViewToStringAsync($"{weekView}.cshtml", model);
 
             BackgroundJob.Schedule(() =>
-            emailService.SendEmailAsync(email, "Weekly Course notification", body), startDate - DateTime.Today - DateTime.Now.TimeOfDay);
+            emailService.SendEmailAsync(email, "Weekly Course notification", body), weekDate - DateTime.Today - DateTime.Now.TimeOfDay);
         }
 
-        public async Task ScheduledMonth(string email, DateTime startDate, string courseName, string userName)
+        public async Task ScheduledMonth(string email, DateTime monthDate, string courseName, string userName)
         {
-            var model = new ScheduleViewModel(courseName, userName, startDate.ToString("dd/MM/yyyy"));
+            var model = new ScheduleViewModel(courseName, userName, monthDate.ToString("dd/MM/yyyy"));
 
             string body = await renderer.RenderViewToStringAsync($"{monthView}.cshtml", model);
 
             BackgroundJob.Schedule(() =>
-            emailService.SendEmailAsync(email, "Montly Course start", body), startDate - DateTime.Today - DateTime.Now.TimeOfDay);
+            emailService.SendEmailAsync(email, "Montly Course start", body), monthDate - DateTime.Today - DateTime.Now.TimeOfDay);
         }
     }
 }
