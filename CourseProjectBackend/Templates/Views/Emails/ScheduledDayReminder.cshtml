@@ -1,0 +1,21 @@
+﻿
+@using Templates.ViewModels
+@model ScheduleViewModel
+
+@{
+    ViewData["EmailTitle"] = "Course Project, reminders about the upcoming course!";
+}
+
+<p>
+    Course Project, reminders about the upcoming course!
+</p>
+
+<br />
+
+@await Html.PartialAsync("ScheduledDayReminder", new ScheduleViewModel(Model.CourseName, Model.UserName, Model.StartDate))
+
+<br />
+
+<p>
+    The Course Project
+</p>

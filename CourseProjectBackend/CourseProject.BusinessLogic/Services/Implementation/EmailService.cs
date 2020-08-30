@@ -30,7 +30,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             return Execute(Options.SendGridKey, subject, message, email);
         }
 
-        public Task<Response> Execute(string apiKey, string subject, string message, string email)
+        public async Task<Response> Execute(string apiKey, string subject, string message, string email)
         {
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
@@ -47,7 +47,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             // See See https://sendgrid.com/docs/User_Guide/Settings/tracking.html
             msg.SetClickTracking(false, false);
 
-            return client.SendEmailAsync(msg);
+            return await client.SendEmailAsync(msg);
         }
     }
 }

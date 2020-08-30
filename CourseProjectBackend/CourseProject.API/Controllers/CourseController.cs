@@ -44,7 +44,7 @@ namespace CourseProject.API.Controllers
             return Ok(response);
         }
 
-        [HttpPost("action")]
+        [HttpPost("[action]")]
         [Authorize(Roles = "student")]
         public async Task<ActionResult<SubscribeToCourseViewModel>> SubscribeToCourse([FromBody] SubscribeToCourseDto subscribeToCourse)
         {

@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace CourseProject.BusinessLogic.Services.Interfaces
 {
     public interface IBackgroundEmailSender
     {
-        void ScheduledWeek(string email, DateTime startDate, string courseName);
-        void ScheduledDay(string email, DateTime startDate, string courseName);
-        void ScheduledMonth(string email, DateTime startDate, string courseName);
+        Task ScheduledWeek(string email, DateTime startDate, string courseName, string userName);
+        Task ScheduledDay(string email, DateTime startDate, string courseName, string userName);
+        Task ScheduledMonth(string email, DateTime startDate, string courseName, string userName);
     }
 }

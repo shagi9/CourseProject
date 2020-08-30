@@ -82,7 +82,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
                 await emailService.SendEmailAsync(courseToUser.User.Email, "Registration To The Course", body);
 
                 // method for schedule
-                Schedule(courseToUser.User.Email, courseToUser.StartDate, courseToUser.Course.Name);
+                ScheduledDate(courseToUser.User.Email, courseToUser.StartDate, courseToUser.Course.Name, courseToUser.User.UserName);
 
                 return mapper.Map<SubscribeToCourseViewModel>(courseToUser);
             } else
@@ -91,26 +91,25 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             }
         }
 
-        //bullshit method, does not work
-        public void Schedule(string email, DateTime startDate, string courseName)
+        public void ScheduledDate(string email, DateTime startDate, string courseName, string userName)
         {
-            var scheduleDay = startDate.AddDays(-1).Add(new TimeSpan(8, 0, 0));
-            var scheduleWeek = startDate.AddDays(-7);
-            var scheduleMonth = startDate.AddMonths(-1);
+            var scheduledDay = startDate.AddDays(-1).Add(new TimeSpan(8, 0, 0));
+            var scheduledWeek = startDate.AddDays(-7);
+            var scheduledMonth = startDate.AddMonths(-1);
 
-            if (scheduleDay > DateTime.Today.Add(new TimeSpan(8, 0, 0)))
+            if (scheduledDay > DateTime.Today.Add(new TimeSpan(8, 0, 0)))
             {
-                backgroundEmailSender.ScheduledDay(email, startDate, courseName);
+                backgroundEmailSender.ScheduledDay(email, startDate, courseName, userName);
             }
 
-            if (scheduleWeek > DateTime.Today)
+            if (scheduledWeek > DateTime.Today)
             {
-                backgroundEmailSender.ScheduledWeek(email, startDate, courseName);
+                backgroundEmailSender.ScheduledWeek(email, startDate, courseName, userName);
             }
 
-            if (scheduleMonth > DateTime.Today)
+            if (scheduledMonth > DateTime.Today)
             {
-                backgroundEmailSender.ScheduledMonth(email, startDate, courseName);
+                backgroundEmailSender.ScheduledMonth(email, startDate, courseName, userName);
             }
             
         }

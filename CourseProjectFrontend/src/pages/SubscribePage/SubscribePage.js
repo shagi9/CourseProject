@@ -5,10 +5,18 @@ import {getRequest} from '../../helpers/axios_requests';
 
 export const SubscribePage = () => {
   const [course, setCourse] = useState({});
-  const [ courseId ] = useParams();
+  const { courseId } = useParams();
+
+  useEffect(() => {
+    const getCourseById = async () => {
+        const { data } = await getRequest("/Course/GetCourseById?courseId="+courseId);
+        setCourse(data);
+    }
+    getCourseById();
+}, [courseId])
     return (
       <div>
-        <SubscribeCard />
+        {course ? <SubscribeCard {...course}/> : <div></div>} 
       </div>
     )
 }

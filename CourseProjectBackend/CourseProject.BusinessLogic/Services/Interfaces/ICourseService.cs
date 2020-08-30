@@ -14,6 +14,6 @@ namespace CourseProject.BusinessLogic.Services.Interfaces
         Task<CourseViewModel> GetCourseById(int courseId);
         Task<bool> GetIsUserSubscribedToTheCourse(int courseId, int userId);
         Task<SubscribeToCourseViewModel> SubscribeToCourse(SubscribeToCourseDto subscribeToCourseDto);
-        void Schedule(string email, DateTime startDate, string courseName);
+        void ScheduledDate(string email, DateTime startDate, string courseName, string userName);
     }
 }
