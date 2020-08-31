@@ -26,6 +26,12 @@ namespace CourseProject.BusinessLogic.MapperProfilers
 
             CreateMap<SubscribeToCourseDto, CourseToUser>()
                 .ForMember(course => course.EndDate, opt => opt.MapFrom(course => course.StartDate.AddDays(14)));
+
+            CreateMap<User, UserWithFullInfoViewModel>()
+                .ForMember(user => user.RegisteredDate, opt => opt.MapFrom(user => user.RegistrationDate.ToString("d")))
+                .ForMember(user => user.DateOfBirth, opt => opt.MapFrom(user => user.DateOfBirth.ToString("d")))
+                .ForMember(user => user.UserName, opt => opt.MapFrom(user => user.UserName))
+                .ForMember(user => user.FullName, opt => opt.MapFrom(user => $"{user.FirstName} {user.LastName}"));
         }
     }
 }

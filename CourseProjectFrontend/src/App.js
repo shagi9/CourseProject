@@ -43,7 +43,7 @@ export const App = () => {
         <Route path="/coursePage" component={() => !user.role ? <Redirect to="/loginPage"/> : (user.role === "admin" ? <Redirect to="/admin"/> : <Courses/>)} />
         <Route path="/confirmation/:userId/:token" component={ConfirmationPage} />
         <Route path="/subscribe/:courseId" component={() => !!user.role ? <SubscribePage/> : <Redirect to="/login"/>}/>
-        <Route path="/admin" component={Admin}></Route>
+        <Route path="/admin" component={() => !user.role ? <Redirect to="/login"/> : (user.role === "student" ? <Redirect to="/"/> : <Admin/>)}/>
         <Route path="/" exact component={Home}></Route>
       </Switch>
     </div> : <div></div>

@@ -1,5 +1,7 @@
 ﻿using CourseProject.BusinessLogic.Dto.AuthDto;
+using CourseProject.BusinessLogic.Dto.UsersDto;
 using CourseProject.BusinessLogic.Services.Interfaces;
+using CourseProject.BusinessLogic.Vm;
 using CourseProject.DataAccess.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -24,6 +26,24 @@ namespace CourseProject.API.Controllers
         {
             this.userManager = userManager;
             this.service = service;
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost("[action]")]
+        public async Task<ActionResult<PaginationUsersViewModel>> GetSortedUsers(DataForUsersSortDto data)
+        {
+            var res = await service.GetSortedUsers(data);
+
+            return Ok(res);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPost("[action]")]
+        public async Task<ActionResult<PaginationUsersViewModel>> GetAllUsersWithFullInfo([FromBody] PageInfo pageInfo)
+        {
+            var result = await service.GetAllUsersWithFullInfo(pageInfo);
+
+            return Ok(result);
         }
 
         [Authorize]

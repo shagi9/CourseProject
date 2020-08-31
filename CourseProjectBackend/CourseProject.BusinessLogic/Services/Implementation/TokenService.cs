@@ -29,7 +29,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.Now.AddMinutes(5),
+                Expires = DateTime.Now.AddMonths(1),
                 SigningCredentials = credentials
             };
 
