@@ -11,6 +11,8 @@ namespace CourseProject.BusinessLogic.Services.Interfaces
     public interface ICourseService
     {
         Task<List<CourseViewModel>> GetAllCourses();
+        Task<List<CourseToUserViewModel>> GetCoursesByUserId(int userId);
+        Task<List<CourseToUserViewModel>> GetCoursesByUserEmail(string email);
         Task<CourseViewModel> GetCourseById(int courseId);
         Task<bool> GetIsUserSubscribedToTheCourse(int courseId, int userId);
         Task<SubscribeToCourseViewModel> SubscribeToCourse(SubscribeToCourseDto subscribeToCourseDto);

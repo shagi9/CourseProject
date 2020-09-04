@@ -57,5 +57,21 @@ namespace CourseProject.API.Controllers
             
             return Ok(response);
         }
+
+        [Authorize]
+        [HttpGet("[action]")]
+        public async Task<ActionResult<UserWithFullInfoViewModel>> GetUserWithFullInfo()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var response = await service.GetUserWithFullInfoById(userId);
+
+            if (response == null)
+            {
+                return BadRequest("User not found");
+            }
+
+            return Ok(response);
+        }
     }
 }

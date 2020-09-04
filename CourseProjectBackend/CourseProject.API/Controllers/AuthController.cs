@@ -17,10 +17,12 @@ namespace CourseProject.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService authService;
+        private readonly ILoggerService loggerService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService, ILoggerService loggerService)
         {
             this.authService = authService;
+            this.loggerService = loggerService;
         }
 
         [HttpPost("login")]
@@ -30,14 +32,16 @@ namespace CourseProject.API.Controllers
 
             if (response == null)
             {
+                loggerService.LogInfo("Invalid username or password");
                 return BadRequest("Invalid username or password");
             }
             
             if (response.IsEmailConfirmed == false)
             {
+                loggerService.LogInfo("Email is not confirmed");
                 return NotFound("Please, confirm your email");
             }
-
+            loggerService.LogInfo("User succesfuly logged in");
             return Ok(response);
         }
 
@@ -48,6 +52,7 @@ namespace CourseProject.API.Controllers
 
             if (response == null)
             {
+                loggerService.LogError("User is not unathorized");
                 return Unauthorized("You are not unathorized");
             }
             return Ok(response);
@@ -62,6 +67,7 @@ namespace CourseProject.API.Controllers
 
             if (!createdUser.Succeeded)
             {
+                loggerService.LogError("Something went wrong");
                 return BadRequest(createdUser.Errors);
             }
 
@@ -75,6 +81,7 @@ namespace CourseProject.API.Controllers
 
             if (!response.Succeeded)
             {
+                loggerService.LogError("Something went wrong");
                 return BadRequest(response.Errors);
             }
             return Ok(response);

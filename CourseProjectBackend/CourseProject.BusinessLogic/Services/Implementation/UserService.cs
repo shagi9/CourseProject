@@ -38,40 +38,82 @@ namespace CourseProject.BusinessLogic.Services.Implementation
         }
         public IQueryable<User> GetUsersByData(string searchString, PageInfo pageInfo)
         {
-            var users = userManager.Users.Where(user =>
-                user.UserName.ToLower().Contains(searchString) || user.FirstName.ToLower().Contains(searchString) ||
-                user.LastName.ToLower().Contains(searchString) || user.Email.ToLower().Contains(searchString));
+            var res = userManager.Users
+                    .Where(x =>
+                        x.UserName.ToLower().Contains(searchString) || x.FirstName.ToLower().Contains(searchString) ||
+                        x.LastName.ToLower().Contains(searchString) || x.Email.ToLower().Contains(searchString) ||
+                        x.PhoneNumber.Contains(searchString));
 
-            pageInfo.TotalCount = users.Count();
+            pageInfo.Total = res.Count();
+
+            return res;
+        }
+
+        
+
+        public IQueryable<User> GetUsersByOrderDecent(string searchString, string orderBy, string orderByField, PageInfo pageInfo)
+        {
+            var users = GetUsersByData(searchString, pageInfo);
+            pageInfo.Total = users.Count();
+
+            var currentPage = pageInfo.Current - 1;
+            var pageSize = pageInfo.PageSize;
+
+            switch($"{orderByField} {orderBy}")
+            {
+                case "id descend":
+                    users = users.OrderByDescending(user => user.Id).Skip((currentPage) * pageSize).Take(pageSize);
+                    break;
+                case "userName descend":
+                    users = users.OrderByDescending(user => user.UserName).Skip((currentPage) * pageSize).Take(pageSize);
+                    break;
+                case "email descend":
+                    users = users.OrderByDescending(user => user.Email).Skip((currentPage) * pageSize).Take(pageSize);
+                    break;
+                case "fullName ascend":
+                    users = users.OrderBy(user => user.FirstName).ThenBy(user => user.LastName).Skip((currentPage) * pageSize).Take(pageSize);
+                    break;
+                case "dateOfBirth descend":
+                    users = users.OrderByDescending(user => user.DateOfBirth).Skip((pageInfo.Current) * pageSize).Take(pageSize);
+                    break;
+                case "registrationDate descend":
+                    users = users.OrderByDescending(user => user.RegistrationDate).Skip((currentPage) * pageSize).Take(pageSize);
+                    break;
+                default:
+                    users = users.Skip((currentPage) * pageSize).Take(pageSize);
+                    break;
+            }
 
             return users;
         }
 
-        public IQueryable<User> GetUsersByOrderAndField(string orderByField, PageInfo pageInfo)
+        public IQueryable<User> GetUsersByOrderAscend(string searchString, string orderBy, string orderByField, PageInfo pageInfo)
         {
-            IQueryable<User> users = userManager.Users;
+            var users = GetUsersByData(searchString, pageInfo);
 
-            var currentPage = pageInfo.CurrentPage - 1;
+            pageInfo.Total = users.Count();
+
+            var currentPage = pageInfo.Current - 1;
             var pageSize = pageInfo.PageSize;
 
-            switch (orderByField)
+            switch ($"{orderByField} {orderBy}")
             {
-                case "id":
+                case "id ascend":
                     users = users.OrderBy(user => user.Id).Skip((currentPage) * pageSize).Take(pageSize);
                     break;
-                case "userName":
+                case "userName ascend":
                     users = users.OrderBy(user => user.UserName).Skip((currentPage) * pageSize).Take(pageSize);
                     break;
-                case "email":
+                case "email ascend":
                     users = users.OrderBy(user => user.Email).Skip((currentPage) * pageSize).Take(pageSize);
                     break;
-                case "fullName":
+                case "fullName ascend":
                     users = users.OrderBy(user => user.FirstName).ThenBy(user => user.LastName).Skip((currentPage) * pageSize).Take(pageSize);
                     break;
-                case "dateOfBirth":
+                case "dateOfBirth ascend":
                     users = users.OrderBy(user => user.DateOfBirth).Skip((currentPage) * pageSize).Take(pageSize);
                     break;
-                case "registrationDate":
+                case "registrationDate ascend":
                     users = users.OrderBy(user => user.RegistrationDate).Skip((currentPage) * pageSize).Take(pageSize);
                     break;
                 default:
@@ -82,26 +124,48 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             return users;
         }
 
+        public IQueryable<User> ClearUsersByData(PageInfo pageInfo)
+        {
+            var users = userManager.Users;
+
+            pageInfo.Total = users.Count();
+            pageInfo.Current = 1;
+
+            users = users.Skip((pageInfo.Current - 1) * pageInfo.PageSize).Take(pageInfo.PageSize);
+
+            return users;
+        }
+
         public async Task<PaginationUsersViewModel> GetSortedUsers(DataForUsersSortDto data)
         {
-            IQueryable<User> users = userManager.Users;
+            var users = userManager.Users;
 
             var pageInfo = new PageInfo
             {
-                CurrentPage = data.Current,
+                Current = data.Current,
                 PageSize = data.PageSize
             };
 
-            if (!string.IsNullOrEmpty(data.SearchString))
+            if (pageInfo.Current == 0)
             {
-                users = GetUsersByData(data.SearchString.ToLower(), pageInfo);
-            }
-            else
-            {
-                pageInfo.TotalCount = userManager.Users.Count();
+                users = ClearUsersByData(pageInfo);
+
+                return (new PaginationUsersViewModel
+                {
+                    Users = await users.ProjectTo<UserWithFullInfoViewModel>(mapper.ConfigurationProvider).ToListAsync(),
+                    PageInfo = pageInfo
+                });
             }
 
-            GetUsersByOrderAndField(data.Field, pageInfo);
+            if (!string.IsNullOrEmpty(data.SearchString) || !string.IsNullOrEmpty(data.Order) || !string.IsNullOrEmpty(data.Field))
+            {
+                users = GetUsersByOrderDecent(data.SearchString, data.Order, data.Field, pageInfo);
+            }
+
+            if (!string.IsNullOrEmpty(data.SearchString) || !string.IsNullOrEmpty(data.Order) && !string.IsNullOrEmpty(data.Field))
+            {
+                users = GetUsersByOrderAscend(data.SearchString, data.Order, data.Field, pageInfo);
+            }
 
             return new PaginationUsersViewModel
             {
@@ -112,16 +176,21 @@ namespace CourseProject.BusinessLogic.Services.Implementation
 
         public async Task<PaginationUsersViewModel> GetAllUsersWithFullInfo(PageInfo pageInfo)
         {
-            var currentPage = pageInfo.CurrentPage - 1;
+            var currentPage = pageInfo.Current - 1;
             var pageSize = pageInfo.PageSize;
             var users = await userManager.Users.Skip((currentPage) * pageSize).Take(pageSize).OrderBy(user => user.RegistrationDate)
                 .ProjectTo<UserWithFullInfoViewModel>(mapper.ConfigurationProvider).ToListAsync();
 
-            pageInfo.TotalCount = userManager.Users.Count();
+            pageInfo.Total = userManager.Users.Count();
 
             return new PaginationUsersViewModel { PageInfo = pageInfo, Users = users };
         }
 
-        
+        public async Task<UserWithFullInfoViewModel> GetUserWithFullInfoById(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            return mapper.Map<UserWithFullInfoViewModel>(user);
+        }
     }
 }

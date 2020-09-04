@@ -16,32 +16,35 @@ namespace CourseProject.API.Controllers
     public class CourseController : ControllerBase
     {
         private readonly ICourseService courseService;
-        public CourseController(ICourseService courseService)
+        private readonly ILoggerService loggerService;
+
+        public CourseController(ICourseService courseService, ILoggerService loggerService)
         {
             this.courseService = courseService;
+            this.loggerService = loggerService;
         }
 
         [HttpGet("[action]")]
         [Authorize(Roles = "student")]
         public async Task<ActionResult<CourseViewModel>> GetCourseById(int courseId)
         {
-            var response = await courseService.GetCourseById(courseId);
+            var course = await courseService.GetCourseById(courseId);
 
-            if (response == null)
+            if (course == null)
             {
+                loggerService.LogError("Course is null");
                 return NotFound("We don't have that course");
             }
-
-            return Ok(response);
+            return Ok(course);
         }
 
         [HttpGet("[action]")]
         [Authorize(Roles = "student")]
         public async Task<ActionResult<List<CourseViewModel>>> GetAllCourses()
         {
-            var response = await courseService.GetAllCourses();
+            var courses = await courseService.GetAllCourses();
 
-            return Ok(response);
+            return Ok(courses);
         }
 
         [HttpPost("[action]")]
@@ -55,6 +58,7 @@ namespace CourseProject.API.Controllers
 
             if (response == null)
             {
+                loggerService.LogError("Error");
                 return BadRequest();
             }
 
@@ -71,10 +75,35 @@ namespace CourseProject.API.Controllers
 
             if (!response)
             {
+                loggerService.LogError("User is not subscribed");
                 return BadRequest("User is not subscribed to this course");
             }
 
             return Ok("User is subscribed to this course");
+        }
+
+        [HttpGet("[action]")]
+        [Authorize]
+        public async Task<ActionResult<List<CourseToUserViewModel>>> GetCoursesByUserId(int userId)
+        {
+            var response = await courseService.GetCoursesByUserId(userId);
+
+            return Ok(response);
+        }
+
+        [HttpGet("[action]")]
+        [Authorize]
+        public async Task<ActionResult<List<CourseToUserViewModel>>> GetCoursesByStudentEmail(string email)
+        {
+            var courses = await courseService.GetCoursesByUserEmail(email);
+
+            if (courses != null)
+            {
+                loggerService.LogError("User is not found with this email");
+                return Ok(courses);
+            }
+
+            return BadRequest();
         }
     }
 }

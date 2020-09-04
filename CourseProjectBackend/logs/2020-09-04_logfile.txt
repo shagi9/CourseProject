@@ -1,0 +1,46 @@
+2020-09-04 08:57:32.0409 INFO User succesfuly logged in
+2020-09-04 08:57:40.6007 INFO User succesfuly logged in
+2020-09-04 10:07:19.5415 INFO User succesfuly logged in
+2020-09-04 10:07:21.7460 ERROR User is not found with this email
+2020-09-04 10:07:28.8860 INFO User succesfuly logged in
+2020-09-04 10:07:40.0458 ERROR User is not subscribed
+2020-09-04 10:31:30.7891 INFO User succesfuly logged in
+2020-09-04 10:31:36.1588 INFO User succesfuly logged in
+2020-09-04 10:31:37.4930 ERROR User is not found with this email
+2020-09-04 11:08:17.0133 INFO User succesfuly logged in
+2020-09-04 11:12:30.5741 ERROR User is not subscribed
+2020-09-04 11:12:50.1684 ERROR User is not subscribed
+2020-09-04 11:13:16.8973 ERROR User is not subscribed
+2020-09-04 11:13:34.5063 ERROR User is not subscribed
+2020-09-04 11:15:01.9543 ERROR User is not subscribed
+2020-09-04 11:15:10.1669 ERROR User is not subscribed
+2020-09-04 11:15:21.5066 ERROR User is not subscribed
+2020-09-04 11:15:38.9080 ERROR User is not subscribed
+2020-09-04 11:15:51.9233 ERROR User is not subscribed
+2020-09-04 11:16:14.5798 ERROR User is not subscribed
+2020-09-04 11:16:28.8551 ERROR User is not subscribed
+2020-09-04 11:16:41.4753 ERROR User is not subscribed
+2020-09-04 11:19:12.2484 ERROR User is not subscribed
+2020-09-04 11:20:35.7747 ERROR User is not subscribed
+2020-09-04 11:22:16.2245 ERROR User is not subscribed
+2020-09-04 11:22:26.9053 ERROR User is not subscribed
+2020-09-04 11:44:41.6475 ERROR User is not subscribed
+2020-09-04 11:45:30.0231 ERROR User is not subscribed
+2020-09-04 11:59:46.0544 ERROR User is not subscribed
+2020-09-04 12:02:19.0867 ERROR User is not subscribed
+2020-09-04 12:06:24.6075 ERROR User is not subscribed
+2020-09-04 12:13:15.9247 ERROR User is not subscribed
+2020-09-04 12:13:32.9567 ERROR User is not subscribed
+2020-09-04 12:14:41.4025 ERROR User is not subscribed
+2020-09-04 12:15:22.9850 ERROR User is not subscribed
+2020-09-04 12:15:33.7828 ERROR User is not subscribed
+2020-09-04 12:17:37.5472 ERROR User is not subscribed
+2020-09-04 12:17:57.5128 ERROR User is not subscribed
+2020-09-04 12:22:56.4468 ERROR User is not subscribed
+2020-09-04 12:23:14.1034 ERROR User is not subscribed
+2020-09-04 12:23:21.3434 ERROR User is not subscribed
+2020-09-04 12:27:10.3365 INFO User succesfuly logged in
+2020-09-04 12:27:16.5501 ERROR User is not found with this email
+2020-09-04 12:27:17.6919 ERROR User is not found with this email
+2020-09-04 12:27:26.5916 INFO User succesfuly logged in
+2020-09-04 12:32:15.1046 ERROR User is not subscribed

@@ -8,6 +8,7 @@ using CourseProject.DataAccess.Entities;
 using Hangfire;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SendGrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,30 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             return await context.Courses.OrderByDescending(course => course.Id)
                 .ProjectTo<CourseViewModel>(mapper.ConfigurationProvider)
                 .ToListAsync();
+        }
+
+        public async Task<List<CourseToUserViewModel>> GetCoursesByUserId(int userId)
+        {
+            var courses = await context.CoursesToUsers
+                .Where(course => course.UserId == userId).OrderBy(course => course.StartDate)
+                .ProjectTo<CourseToUserViewModel>(mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return courses;
+        }
+
+        public async Task<List<CourseToUserViewModel>> GetCoursesByUserEmail(string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if (user != null)
+            {
+                var courses = await context.CoursesToUsers
+                    .Where(users => users.UserId == user.Id).ProjectTo<CourseToUserViewModel>(mapper.ConfigurationProvider)
+                    .ToListAsync();
+
+                return courses;
+            }
+            return null;
         }
 
         public async Task<CourseViewModel> GetCourseById(int courseId)
@@ -113,5 +138,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
                 backgroundEmailSender.ScheduledMonth(email, monthDate, courseName, userName);
             }
         }
+
+        
     }
 }

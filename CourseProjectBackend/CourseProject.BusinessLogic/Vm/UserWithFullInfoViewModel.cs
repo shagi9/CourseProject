@@ -11,6 +11,6 @@ namespace CourseProject.BusinessLogic.Vm
         public string UserName { get; set; }
         public string Email { get; set; }
         public string DateOfBirth { get; set; }
-        public string RegisteredDate { get; set; }
+        public string RegistrationDate { get; set; }
     }
 }

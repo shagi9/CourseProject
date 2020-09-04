@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { UserOutlined } from "@ant-design/icons";
 import { remove } from "js-cookie";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../../store/actions/user.actions";
-import LogoImg from "../../../assets/images/simple2.png";
-import { Link } from "react-router-dom";
-import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
-import { Layout, Menu, Drawer } from 'antd';
+import Title from 'antd/lib/typography/Title';
+import { Layout, Avatar, Menu, Button } from 'antd';
 
-import classes from './Header.css';
+import './Header.scss';
 
 export const Header = ({ user }) => {
 
@@ -21,29 +20,38 @@ export const Header = ({ user }) => {
   };
 
   return (
-    <Layout.Header>
+    <Layout.Header style={{ padding: 10 }}>
       <div className="logo" />
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-        <Menu.Item key="1">
-          <NavLink to="/">
-            Home
-          </NavLink>
-        </Menu.Item>
-
-      { user.role ? (
-      <Menu.Item key="4">
-        <NavLink to="loginPage" onClick={logout}>
+      <Link to="/coursePage">
+        <Title style={{ color: 'white' }} level={3}>Course Project</Title>
+      </Link>
+      {user.role && 
+        <div>
+          {user.role === "student" ? (
+            <Link to="/profile" >
+            <Avatar
+              style={{ backgroundColor: "#d9d9d9", float:"right", right:"140px", bottom:"40px" }}
+              icon={<UserOutlined />}
+            />
+            </Link>
+          ) : (
+            <Avatar size={35} style={{ backgroundColor: "#2f4f4f", float:"right", right:"140px", bottom:"40px" }}>
+              {user.userName}
+            </Avatar>
+          )}
+        </div>
+      }
+      {user.role ? (
+        <Link to="/loginPage">
+        <Button type="primary" style={{ float: 'right', bottom: "40px" }} danger onClick={logout}>
           Sign Out
-        </NavLink>
-      </Menu.Item>
+        </Button>
+        </Link>
       ) : (
-        <Menu.Item key="3">
-          <NavLink to="loginPage">
-            Sign In
-          </NavLink>
-        </Menu.Item>
+        <Link to="/loginPage">
+          <Button style={{ float: 'right', bottom: "40px"}} type="primary">Sign In</Button>
+        </Link>
       )}
-    </Menu>
-    </Layout.Header>
+    </Layout.Header>     
   );
 }

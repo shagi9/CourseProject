@@ -16,7 +16,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NLog;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Text;
 using Templates;
@@ -27,6 +29,8 @@ namespace CourseProject.API
     {
         public Startup(IConfiguration configuration)
         {
+            LogManager.LoadConfiguration(string.Concat(Directory.GetCurrentDirectory(),
+                "/nlog.config"));
             Configuration = configuration;
         }
 
@@ -44,6 +48,7 @@ namespace CourseProject.API
             services.AddTransient<ICourseService, CourseService>();
             services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<ILoggerService, LoggerService>();
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<IAuthService, AuthService>();
 

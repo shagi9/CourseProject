@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, Button } from "antd";
 import { Link } from "react-router-dom";
+import './CourseCard.scss';
 
 export const CourseCard = ({ id, name, description, imgUrl}) => {
   const { Meta } = Card;
@@ -9,6 +10,7 @@ export const CourseCard = ({ id, name, description, imgUrl}) => {
     <Card
         cover = {
         <img
+          className="img"
           src={imgUrl} 
           alt="courseImage"
         />

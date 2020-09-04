@@ -1,0 +1,104 @@
+2020-09-03 10:11:17.6852 INFO User succesfuly logged in
+2020-09-03 10:13:35.9356 ERROR Don't found a user with this email
+2020-09-03 10:13:40.5442 ERROR Don't found a user with this email
+2020-09-03 10:13:42.7163 ERROR Don't found a user with this email
+2020-09-03 11:32:35.5098 ERROR Don't found a user with this email
+2020-09-03 11:33:31.4252 ERROR Don't found a user with this email
+2020-09-03 11:33:35.5802 ERROR Don't found a user with this email
+2020-09-03 11:34:41.3163 ERROR Don't found a user with this email
+2020-09-03 11:35:20.6386 ERROR Don't found a user with this email
+2020-09-03 11:35:23.0586 ERROR Don't found a user with this email
+2020-09-03 11:35:38.7758 ERROR Don't found a user with this email
+2020-09-03 11:35:40.8119 ERROR Don't found a user with this email
+2020-09-03 11:35:47.3364 ERROR Don't found a user with this email
+2020-09-03 11:35:48.4517 ERROR Don't found a user with this email
+2020-09-03 11:37:05.3678 ERROR Don't found a user with this email
+2020-09-03 11:37:06.9688 ERROR Don't found a user with this email
+2020-09-03 11:37:11.2943 ERROR Don't found a user with this email
+2020-09-03 11:39:19.2041 ERROR Don't found a user with this email
+2020-09-03 11:39:51.0358 ERROR Don't found a user with this email
+2020-09-03 11:40:21.2950 ERROR Don't found a user with this email
+2020-09-03 11:47:14.9484 ERROR Don't found a user with this email
+2020-09-03 11:54:38.7302 ERROR Don't found a user with this email
+2020-09-03 11:54:43.3311 ERROR Don't found a user with this email
+2020-09-03 11:55:09.5278 ERROR Don't found a user with this email
+2020-09-03 11:55:25.7693 ERROR Don't found a user with this email
+2020-09-03 11:56:26.2161 ERROR Don't found a user with this email
+2020-09-03 11:56:28.2357 ERROR Don't found a user with this email
+2020-09-03 11:58:19.8960 ERROR Don't found a user with this email
+2020-09-03 12:00:39.4797 ERROR Don't found a user with this email
+2020-09-03 12:01:13.5770 ERROR Don't found a user with this email
+2020-09-03 12:01:52.0606 ERROR Don't found a user with this email
+2020-09-03 12:02:54.7426 ERROR Don't found a user with this email
+2020-09-03 12:03:51.9331 ERROR Don't found a user with this email
+2020-09-03 12:03:54.6017 ERROR Don't found a user with this email
+2020-09-03 12:07:51.0453 ERROR Don't found a user with this email
+2020-09-03 12:07:58.9307 ERROR Don't found a user with this email
+2020-09-03 12:08:00.9718 ERROR Don't found a user with this email
+2020-09-03 12:08:09.0222 ERROR Don't found a user with this email
+2020-09-03 12:08:33.7721 ERROR Don't found a user with this email
+2020-09-03 12:08:35.5096 ERROR Don't found a user with this email
+2020-09-03 12:09:32.3151 ERROR Don't found a user with this email
+2020-09-03 12:09:59.6067 ERROR Don't found a user with this email
+2020-09-03 12:10:00.2742 ERROR Don't found a user with this email
+2020-09-03 12:20:31.4792 INFO User succesfuly logged in
+2020-09-03 12:20:33.0872 ERROR Don't found a user with this email
+2020-09-03 12:20:34.6182 ERROR Don't found a user with this email
+2020-09-03 12:20:41.3734 ERROR Don't found a user with this email
+2020-09-03 12:20:48.7274 ERROR Don't found a user with this email
+2020-09-03 12:20:54.2041 ERROR Don't found a user with this email
+2020-09-03 12:44:07.5629 INFO User succesfuly logged in
+2020-09-03 12:56:15.0351 INFO User succesfuly logged in
+2020-09-03 12:57:31.1504 INFO User succesfuly logged in
+2020-09-03 14:07:58.7271 INFO Invalid username or password
+2020-09-03 14:08:05.5715 INFO User succesfuly logged in
+2020-09-03 14:08:13.2179 ERROR Don't found a user with this email
+2020-09-03 14:37:32.8003 ERROR Don't found a user with this email
+2020-09-03 14:51:39.7645 INFO User succesfuly logged in
+2020-09-03 14:54:44.6964 INFO User succesfuly logged in
+2020-09-03 15:01:51.5905 INFO User succesfuly logged in
+2020-09-03 15:01:56.6501 ERROR Don't found a user with this email
+2020-09-03 15:01:58.6873 ERROR Don't found a user with this email
+2020-09-03 15:15:39.0970 INFO User succesfuly logged in
+2020-09-03 15:17:23.4194 INFO User succesfuly logged in
+2020-09-03 15:18:50.9451 INFO User succesfuly logged in
+2020-09-03 15:18:55.9400 INFO User succesfuly logged in
+2020-09-03 15:30:41.5693 INFO User succesfuly logged in
+2020-09-03 15:30:54.2460 INFO User succesfuly logged in
+2020-09-03 15:31:43.7897 INFO User succesfuly logged in
+2020-09-03 15:32:05.7671 INFO User succesfuly logged in
+2020-09-03 15:36:47.3016 INFO User succesfuly logged in
+2020-09-03 15:36:54.4727 INFO User succesfuly logged in
+2020-09-03 15:41:19.3984 INFO Invalid username or password
+2020-09-03 15:41:26.3041 INFO User succesfuly logged in
+2020-09-03 15:41:35.0890 INFO User succesfuly logged in
+2020-09-03 15:43:26.5613 ERROR User is not subscribed
+2020-09-03 15:44:07.4494 INFO Invalid username or password
+2020-09-03 15:44:12.5084 INFO User succesfuly logged in
+2020-09-03 15:44:32.0083 INFO User succesfuly logged in
+2020-09-03 15:50:49.9845 INFO User succesfuly logged in
+2020-09-03 15:50:58.8554 INFO User succesfuly logged in
+2020-09-03 15:53:05.3851 INFO User succesfuly logged in
+2020-09-03 15:53:22.2191 INFO User succesfuly logged in
+2020-09-03 15:53:28.0095 ERROR Don't found a user with this email
+2020-09-03 15:53:29.3339 ERROR Don't found a user with this email
+2020-09-03 15:53:37.0228 INFO User succesfuly logged in
+2020-09-03 15:58:00.5034 INFO User succesfuly logged in
+2020-09-03 15:58:01.9318 ERROR Don't found a user with this email
+2020-09-03 15:58:19.3527 INFO User succesfuly logged in
+2020-09-03 16:12:06.6557 INFO Invalid username or password
+2020-09-03 16:12:12.5612 INFO User succesfuly logged in
+2020-09-03 16:12:17.0038 ERROR Don't found a user with this email
+2020-09-03 16:12:26.8641 INFO User succesfuly logged in
+2020-09-03 17:05:30.3591 INFO User succesfuly logged in
+2020-09-03 18:29:48.1160 INFO User succesfuly logged in
+2020-09-03 18:29:59.5025 INFO User succesfuly logged in
+2020-09-03 18:37:43.0580 INFO User succesfuly logged in
+2020-09-03 18:38:05.6714 INFO User succesfuly logged in
+2020-09-03 18:38:23.1001 ERROR User is not found with this email
+2020-09-03 18:38:24.8737 ERROR User is not found with this email
+2020-09-03 18:41:12.6975 INFO User succesfuly logged in
+2020-09-03 20:57:42.0273 INFO User succesfuly logged in
+2020-09-03 20:57:51.2246 INFO User succesfuly logged in
+2020-09-03 20:58:55.8645 INFO User succesfuly logged in
+2020-09-03 20:59:01.7611 INFO User succesfuly logged in
