@@ -126,7 +126,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
 
             if (weekDate > DateTime.Today)
             {
-                await backgroundEmailSender.ScheduledWeek(email, dayDate, courseName, userName);
+                await backgroundEmailSender.ScheduledWeek(email, weekDate, courseName, userName);
             }
 
             if (dayDate > DateTime.Today.Add(new TimeSpan(8, 0, 0)))

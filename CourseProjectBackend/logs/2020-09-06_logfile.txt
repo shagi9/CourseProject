@@ -46,3 +46,4 @@
 2020-09-06 21:11:34.9643 ERROR User is not found with this email
 2020-09-06 21:12:30.5080 INFO User succesfuly logged in
 2020-09-06 21:12:37.3899 ERROR User is not subscribed
+2020-09-06 21:16:56.7033 INFO User succesfuly logged in
