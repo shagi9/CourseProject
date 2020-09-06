@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Result, Button } from "antd";
 import { Link, useParams } from "react-router-dom";
 import { getRequest } from "../../helpers/axios_requests";
+import './ConfirmationPage.css';
 
 export const ConfirmationPage = () => {
   const [resStatus, setResStatus] = useState({

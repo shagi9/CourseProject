@@ -1,0 +1,12 @@
+.email-confirmation{
+  height: calc(100vh - 63.8px);
+  background-color: #364150;
+}
+
+.ant-result {
+    padding: 120px 50px!important;
+}
+
+.ant-result-title {
+    color: #1890ff !important;
+}

@@ -71,7 +71,7 @@ namespace CourseProject.API.Controllers
                 return BadRequest(createdUser.Errors);
             }
 
-            return Ok("User created");
+            return Ok("Congratulations, you are successfully registered on.");
         }
 
         [HttpGet("verifyEmail")]

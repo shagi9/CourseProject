@@ -1,8 +1,8 @@
-.register-form{
+.register-container{
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 4rem 2rem;
-  width: 100%;
-  height: calc(100vh - 65.8px);
+  min-height: calc(100vh - 63.8px);
+  background-color: #364150;
 }

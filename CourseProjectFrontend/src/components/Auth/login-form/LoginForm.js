@@ -1,33 +1,28 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { getCookies, set } from 'js-cookie';
-import './LoginForm.css';
 import { postRequest, getRequest } from '../../../helpers/axios_requests';
 import { Form, Input, Checkbox, Button } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+
+import './LoginForm.scss';
 
 import { setUser } from '../../../store/actions/user.actions';
 import { useDispatch } from 'react-redux';
   
   export const LoginForm = () => {
-    
     const [form] = Form.useForm();
     const dispatch = useDispatch();
 
-    const initialValues = {
-      Login: "",
-      Password: "",
-      RememberMe: true,
-    };
-
     const errorsSchema = {
-      username: ["username is invalid"],
+      username: ["Email is invalid"],
       password: ["Password is invalid"],
-      confirmEmail: ["Please, confirm your email before start using the application."]
+      confirmEmail: ["Please, confirm your email before start using the application"]
     }
 
     const validationSchema = {
       Login: [
-        { required: true, message: "The Username field is required" }
+        { required: true, message: "The Email field is required" }
       ],
       Password: [
         { required: true, message: "The Password field is required" }
@@ -76,39 +71,42 @@ import { useDispatch } from 'react-redux';
 
   return (
     <Form
-      className="login-form"
-      name="basic"
-      initialValues={initialValues}
+    name="normal_login"
+    className="login-form"
+      initialValues={{
+        remember: true,
+      }}
       onFinish={onFinish}
       form={form}
     >
+      <h1 style={{textAlign: "center", color: "#1890ff"}}>Sign In</h1>
       <Form.Item
-        label="Username"
         name="login"
         rules={validationSchema.Login}
       >
-        <Input placeholder="Username" />
+        <Input
+        prefix={<UserOutlined className="site-form-item-icon" />} 
+        placeholder="Email" />
       </Form.Item>
       <Form.Item
-        label="Password"
         name="password"
         rules={validationSchema.Password}
       >
-        <Input.Password type="Password" placeholder="password" />
+        <Input.Password  
+        prefix={<LockOutlined className="site-form-item-icon" />} 
+        type="Password" 
+        placeholder="Password" />
       </Form.Item>
       <Form.Item>
-        <Form.Item name="remember" valuePropName="checked" noStyle>
+         <Form.Item name="remember" valuePropName="checked" noStyle>
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
-        <Link to="/registerPage" className="login-form-forgot">
-          Forgot password
-        </Link>
-      </Form.Item>
+        <Link to="/registerPage" className="login-form-register">Go To Register</Link>
+      </Form.Item> 
       <Form.Item>
         <Button className="login-btn" type="primary" htmlType="submit">
           Log in
         </Button>
-        Or <Link to="/registerPage">register!</Link>
       </Form.Item>
     </Form>
   );

@@ -1,0 +1,8 @@
+2020-09-05 20:30:50.0674 INFO User succesfuly logged in
+2020-09-05 20:30:50.0674 INFO User succesfuly logged in
+2020-09-05 20:35:26.0103 INFO User succesfuly logged in
+2020-09-05 20:36:24.2991 INFO User succesfuly logged in
+2020-09-05 20:46:59.4235 INFO User succesfuly logged in
+2020-09-05 20:47:09.7575 INFO User succesfuly logged in
+2020-09-05 20:48:37.1113 INFO User succesfuly logged in
+2020-09-05 20:51:57.4333 INFO User succesfuly logged in

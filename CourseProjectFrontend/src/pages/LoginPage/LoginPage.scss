@@ -1,8 +1,9 @@
-.home-layout {
+.home-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 4rem 2rem;
+  width: 100%;
+  padding: 8rem 2rem;
   height: calc(100vh - 63.8px);
   background-color: #364150;
 }
+  

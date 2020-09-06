@@ -20,22 +20,23 @@ export const Header = ({ user }) => {
   };
 
   return (
-    <Layout.Header style={{ padding: 10 }}>
+    <Layout.Header>
+      <div className="header">
       <div className="logo" />
       <Link to="/coursePage">
-        <Title style={{ color: 'white' }} level={3}>Course Project</Title>
+      <h2 className="logo-text">CourseProject</h2>
       </Link>
       {user.role && 
         <div>
           {user.role === "student" ? (
             <Link to="/profile" >
             <Avatar
-              style={{ backgroundColor: "#d9d9d9", float:"right", right:"140px", bottom:"40px" }}
+              style={{ backgroundColor: "#d9d9d9", float:"right", right:"140px", bottom:"60px" }}
               icon={<UserOutlined />}
             />
             </Link>
           ) : (
-            <Avatar size={35} style={{ backgroundColor: "#2f4f4f", float:"right", right:"140px", bottom:"40px" }}>
+            <Avatar size={35} style={{ backgroundColor: "#2f4f4f", float:"right", right:"150px", bottom:"60px" }}>
               {user.userName}
             </Avatar>
           )}
@@ -43,15 +44,16 @@ export const Header = ({ user }) => {
       }
       {user.role ? (
         <Link to="/loginPage">
-        <Button type="primary" style={{ float: 'right', bottom: "40px" }} danger onClick={logout}>
+        <Button type="primary" style={{ float: 'right', bottom: "60px" }} danger onClick={logout}>
           Sign Out
         </Button>
         </Link>
       ) : (
         <Link to="/loginPage">
-          <Button style={{ float: 'right', bottom: "40px"}} type="primary">Sign In</Button>
+          <Button  className="sign-in" type="primary">Sign In</Button>
         </Link>
       )}
+      </div> 
     </Layout.Header>     
   );
 }

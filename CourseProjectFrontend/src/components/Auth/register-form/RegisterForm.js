@@ -9,56 +9,36 @@ import {
   Button,
   Alert
 } from 'antd';
+import './RegisterForm.scss';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { postRequest } from '../../../helpers/axios_requests';
 import { firstAndLastNameRegValidator, 
   userNameRexValidator, dateOfBirthValidator } from '../../../helpers/validation';
 
- const formItemLayout = {
-   labelCol: {
-     xs: { span: 24 },
-     sm: { span: 8 },
-   },
-   wrapperCol: {
-     xs: { span: 24 },
-     sm: { span: 16 },
-   },
- };
- const tailFormItemLayout = {
-   wrapperCol: {
-     xs: {
-       span: 24,
-       offset: 0,
-     },
-     sm: {
-       span: 16,
-       offset: 8,
-     },
-   },
- };
+ const formLoyaut = "vertical";
 
  const validationSchema = {
    Email: [
-     { required: true, message: "The e-mail field is required" },
+     { required: true, message: "The E-mail field is required" },
      { type: "email", message: "The input is not valid E-mail"}
     ],
    Password: [
-     { required: true, message: "The password field is required"},
+     { required: true, message: "The Password field is required"},
      { min: 8, message: "Minimum length is 8 characters"},
      { max: 128, message: "Password is to long"}
     ],
-   FirstName: [{ required: true, message: "The firstname field is required"}, 
+   FirstName: [{ required: true, message: "The Firstname field is required"}, 
      { validator: firstAndLastNameRegValidator}
     ],
-   LastName: [{ required: true, message: "The lastname field is required"}, 
+   LastName: [{ required: true, message: "The Lastname field is required"}, 
      { validator: firstAndLastNameRegValidator}
     ],
-   UserName: [{ required: true, message: "The username field is required", whitespace: true},
+   UserName: [{ required: true, message: "The Username field is required", whitespace: true},
     { min: 8, message: "Minimum length is 8 characters"},
     { max: 20, message: "Username is to long"},
     { validator: userNameRexValidator} 
     ],
-   DateOfBirth: [{ required: true, message: "The dateofbirth field is required"},
+   DateOfBirth: [{ required: true, message: "The Dateofbirth field is required"},
     { validator: dateOfBirthValidator}
    ]
  };
@@ -111,18 +91,15 @@ export const RegisterForm = () => {
   };
 
   return !responseStatus.finished ? (
-    <Row type="flex" justify="center" align="middle" style={{height: '100%'}}>
     <Form
-      {...formItemLayout}
+      layout={formLoyaut}
       form={form}
       name="register"
       onFinish={onFinish}
-       initialValues={{
-         residence: ['zhejiang', 'hangzhou', 'xihu'],
-         prefix: '86',
-       }}
+      className="register-form"
       scrollToFirstError
     >
+      <h1 style={{textAlign: "center", color: "#1890ff"}}>Sign Up</h1>
       <Form.Item
         name="email"
         label="E-mail"
@@ -145,7 +122,7 @@ export const RegisterForm = () => {
         label="First Name"
         rules={validationSchema.FirstName}
       >
-        <Input />
+        <Input className="item"/>
       </Form.Item>
 
       <Form.Item
@@ -185,19 +162,17 @@ export const RegisterForm = () => {
         rules={[
           { validator:(_, value) => value ? Promise.resolve() : Promise.reject('Should accept agreement') },
         ]}
-        {...tailFormItemLayout}
       >
         <Checkbox>
           I have read the agreement
         </Checkbox>
       </Form.Item>
-      <Form.Item {...tailFormItemLayout} >
+      <Form.Item>
         <Button type="primary" htmlType="submit">
           Register
         </Button>
       </Form.Item>
     </Form>
-    </Row>
   ) : (
     <Alert
     message={responseStatus.message}

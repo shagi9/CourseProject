@@ -1,14 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react';
 import { LoginForm } from '../../components/Auth/login-form/LoginForm';
+import './LoginPage.scss';
 
-export class LoginPage extends Component {
-    render() {
-        return (
-            <div className="home-layout">
-                <LoginForm />
-            </div>
-        )
-    }
-}
+export const LoginPage = () => 
+    <div className="home-container"><LoginForm /></div>
 
-export default LoginPage
+

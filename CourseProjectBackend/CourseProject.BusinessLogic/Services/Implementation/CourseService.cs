@@ -28,6 +28,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
         private readonly IRazorViewToStringRenderer renderer;
         private readonly UserManager<User> userManager;
         const string view = "/Views/Emails/SubscribeToCourse";
+        const string weekView = "/Views/Emails/ScheduledWeekReminder";
 
         public CourseService(DBContext context, IMapper mapper, 
             IBackgroundEmailSender backgroundEmailSender, 
@@ -117,7 +118,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             }
         }
 
-        public void ScheduledDate(string email, DateTime startDate, string courseName, string userName)
+        public async void ScheduledDate(string email, DateTime startDate, string courseName, string userName)
         {
             var dayDate = startDate.AddDays(-1).Add(new TimeSpan(8, 0, 0));
             var weekDate = startDate.AddDays(-7);
@@ -125,17 +126,17 @@ namespace CourseProject.BusinessLogic.Services.Implementation
 
             if (weekDate > DateTime.Today)
             {
-                backgroundEmailSender.ScheduledWeek(email, weekDate, courseName, userName);
+                await backgroundEmailSender.ScheduledWeek(email, dayDate, courseName, userName);
             }
 
             if (dayDate > DateTime.Today.Add(new TimeSpan(8, 0, 0)))
             {
-                backgroundEmailSender.ScheduledDay(email, dayDate, courseName, userName);
+                await backgroundEmailSender.ScheduledDay(email, dayDate, courseName, userName);
             }
 
             if (monthDate > DateTime.Today)
             {
-                backgroundEmailSender.ScheduledMonth(email, monthDate, courseName, userName);
+                await backgroundEmailSender.ScheduledMonth(email, monthDate, courseName, userName);
             }
         }
 

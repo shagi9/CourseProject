@@ -31,7 +31,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             string body = await renderer.RenderViewToStringAsync($"{dayView}.cshtml", model);
             
             BackgroundJob.Schedule(() =>
-            emailService.SendEmailAsync(email, "Day Course notification", body), dayDate - DateTime.Today - DateTime.Now.TimeOfDay);
+            emailService.SendEmailAsync(email, "Day Course reminder", body), dayDate - DateTime.Today - DateTime.Now.TimeOfDay);
         }
 
         public async Task ScheduledWeek(string email, DateTime weekDate, string courseName, string userName)
@@ -41,7 +41,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             string body = await renderer.RenderViewToStringAsync($"{weekView}.cshtml", model);
 
             BackgroundJob.Schedule(() =>
-            emailService.SendEmailAsync(email, "Weekly Course notification", body), weekDate - DateTime.Today - DateTime.Now.TimeOfDay);
+            emailService.SendEmailAsync(email, "Weekly Course reminder", body), weekDate - DateTime.Today - DateTime.Now.TimeOfDay);
         }
 
         public async Task ScheduledMonth(string email, DateTime monthDate, string courseName, string userName)

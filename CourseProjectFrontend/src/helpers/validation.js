@@ -13,7 +13,7 @@ export const userNameRexValidator = (rule, value) => {
     if (reg.test(value)) {
     	return Promise.resolve();
     }
-    return Promise.reject("Only number and letters is required.");
+    return Promise.reject("Only number and letters are required.");
 }
 
 export const dateOfBirthValidator = (rule, value) => {

@@ -1,0 +1,48 @@
+2020-09-06 11:02:37.3002 INFO Invalid username or password
+2020-09-06 11:02:43.3206 INFO Invalid username or password
+2020-09-06 11:03:44.5900 INFO User succesfuly logged in
+2020-09-06 11:04:46.4053 INFO Invalid username or password
+2020-09-06 11:04:49.7078 INFO Invalid username or password
+2020-09-06 11:04:57.2770 INFO Invalid username or password
+2020-09-06 11:05:20.4848 INFO User succesfuly logged in
+2020-09-06 11:05:27.7351 INFO Invalid username or password
+2020-09-06 11:05:33.4738 INFO User succesfuly logged in
+2020-09-06 11:06:51.2219 INFO User succesfuly logged in
+2020-09-06 11:07:10.2563 INFO User succesfuly logged in
+2020-09-06 11:51:55.0961 INFO User succesfuly logged in
+2020-09-06 11:55:43.5304 INFO User succesfuly logged in
+2020-09-06 11:56:42.7079 INFO Invalid username or password
+2020-09-06 11:56:50.7937 INFO User succesfuly logged in
+2020-09-06 11:57:21.0429 INFO User succesfuly logged in
+2020-09-06 11:57:51.5884 INFO User succesfuly logged in
+2020-09-06 11:58:10.8012 INFO User succesfuly logged in
+2020-09-06 11:58:43.1360 INFO User succesfuly logged in
+2020-09-06 12:00:05.6115 INFO User succesfuly logged in
+2020-09-06 12:03:01.0505 INFO Invalid username or password
+2020-09-06 12:03:10.4980 INFO User succesfuly logged in
+2020-09-06 12:03:29.7956 INFO User succesfuly logged in
+2020-09-06 12:04:41.3149 INFO Invalid username or password
+2020-09-06 12:04:46.7525 INFO User succesfuly logged in
+2020-09-06 12:04:56.2343 INFO User succesfuly logged in
+2020-09-06 14:55:47.6448 INFO Invalid username or password
+2020-09-06 14:55:58.3791 INFO User succesfuly logged in
+2020-09-06 14:58:54.0543 ERROR User is not found with this email
+2020-09-06 14:59:29.6098 INFO User succesfuly logged in
+2020-09-06 15:11:33.5911 ERROR User is not found with this email
+2020-09-06 15:12:52.3759 INFO User succesfuly logged in
+2020-09-06 15:13:57.7039 INFO Invalid username or password
+2020-09-06 15:14:02.2875 INFO User succesfuly logged in
+2020-09-06 15:14:26.3855 INFO Invalid username or password
+2020-09-06 15:14:30.3868 INFO User succesfuly logged in
+2020-09-06 15:14:37.6328 INFO User succesfuly logged in
+2020-09-06 20:55:45.0060 INFO User succesfuly logged in
+2020-09-06 20:59:58.8832 INFO User succesfuly logged in
+2020-09-06 21:09:39.8113 INFO User succesfuly logged in
+2020-09-06 21:09:49.0613 ERROR User is not subscribed
+2020-09-06 21:10:03.1511 ERROR User is not subscribed
+2020-09-06 21:10:13.2598 INFO Invalid username or password
+2020-09-06 21:10:20.2555 INFO User succesfuly logged in
+2020-09-06 21:10:26.6777 ERROR User is not found with this email
+2020-09-06 21:11:34.9643 ERROR User is not found with this email
+2020-09-06 21:12:30.5080 INFO User succesfuly logged in
+2020-09-06 21:12:37.3899 ERROR User is not subscribed
