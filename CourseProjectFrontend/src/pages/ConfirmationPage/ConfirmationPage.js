@@ -38,7 +38,7 @@ export const ConfirmationPage = () => {
           status={resStatus.status}
           title={resStatus.title}
           extra={[
-            <Link to="/loginPage">
+            <Link to="/login">
               <Button type="primary">Start learning !</Button>
             </Link>,
           ]}

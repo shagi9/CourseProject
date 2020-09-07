@@ -101,7 +101,7 @@ import { useDispatch } from 'react-redux';
          <Form.Item name="remember" valuePropName="checked" noStyle>
           <Checkbox>Remember me</Checkbox>
         </Form.Item>
-        <Link to="/registerPage" className="login-form-register">Go To Register</Link>
+        <Link to="/register" className="login-form-register">Go To Register</Link>
       </Form.Item> 
       <Form.Item>
         <Button className="login-btn" type="primary" htmlType="submit">

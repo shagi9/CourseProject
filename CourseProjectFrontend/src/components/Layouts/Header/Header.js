@@ -23,7 +23,7 @@ export const Header = ({ user }) => {
     <Layout.Header>
       <div className="header">
       <div className="logo" />
-      <Link to="/coursePage">
+      <Link to="/courses">
       <h2 className="logo-text">CourseProject</h2>
       </Link>
       {user.role && 
@@ -43,13 +43,13 @@ export const Header = ({ user }) => {
         </div>
       }
       {user.role ? (
-        <Link to="/loginPage">
+        <Link to="/login">
         <Button type="primary" style={{ float: 'right', bottom: "60px" }} danger onClick={logout}>
           Sign Out
         </Button>
         </Link>
       ) : (
-        <Link to="/loginPage">
+        <Link to="/login">
           <Button  className="sign-in" type="primary">Sign In</Button>
         </Link>
       )}

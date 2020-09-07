@@ -15,6 +15,7 @@ import { ConfirmationPage } from './pages/ConfirmationPage/ConfirmationPage';
 import { SubscribePage } from './pages/SubscribePage/SubscribePage';
 import {UserProfilePage } from './pages/ProfilePage/Profile';
 import Courses from './pages/CoursesPage/Courses';
+import { PageNotFound } from './pages/404-Page/404-page';
 
 export const App = () => {
   const user = useSelector(state => state.user);
@@ -40,13 +41,15 @@ export const App = () => {
       <Header user={user} />
       <Switch>
         <Route path="/" exact component={Home}></Route>
-        <Route path="/loginPage" component={() => !user.role ? <LoginPage /> : (user.role === "student" ? <Redirect to="/coursePage"/> : <Redirect to="/admin" />)}/>
-        <Route path="/registerPage" component={RegisterPage}></Route>
-        <Route path="/coursePage" component={() => !user.role ? <Redirect to="/loginPage"/> : (user.role === "admin" ? <Redirect to="/admin"/> : <Courses/>)} />
+        <Route path="/login" component={() => !user.role ? <LoginPage /> : (user.role === "student" ? <Redirect to="/courses"/> : <Redirect to="/admin" />)}/>
+        <Route path="/register" component={RegisterPage}></Route>
+        <Route path="/courses" component={() => !user.role ? <Redirect to="/login"/> : (user.role === "admin" ? <Redirect to="/admin"/> : <Courses/>)} />
         <Route path="/confirmation/:userId/:token" component={ConfirmationPage} />
         <Route path="/subscribe/:courseId" component={() => !!user.role ? <SubscribePage/> : <Redirect to="/login"/>}/>
         <Route path="/admin" component={() => !user.role ? <Redirect to="/login"/> : (user.role === "student" ? <Redirect to="/"/> : <Admin/>)}/>
         <Route path="/profile" component={() => !user.role ? <Redirect to="/login"/> : (user.role === "admin" ? <Redirect to="/admin"/> : <UserProfilePage/>)} />
+        <Route path='/404' component={PageNotFound} />
+        <Redirect from='*' to='/404' /> 
       </Switch>
     </div> : <div></div>
     }
