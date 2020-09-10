@@ -1,0 +1,15 @@
+2020-09-09 09:41:45.3014 INFO Invalid username or password
+2020-09-09 09:41:48.6835 INFO Invalid username or password
+2020-09-09 09:41:53.3512 INFO Invalid username or password
+2020-09-09 09:41:59.3168 INFO User succesfuly logged in
+2020-09-09 10:59:06.5348 INFO Invalid username or password
+2020-09-09 10:59:19.1434 INFO User succesfuly logged in
+2020-09-09 15:59:57.1717 INFO Invalid username or password
+2020-09-09 16:00:02.4098 INFO User succesfuly logged in
+2020-09-09 16:00:13.4131 INFO User succesfuly logged in
+2020-09-09 16:00:43.0628 ERROR User is not subscribed
+2020-09-09 16:01:00.9340 INFO User succesfuly logged in
+2020-09-09 16:01:28.8980 INFO User succesfuly logged in
+2020-09-09 17:47:42.1913 ERROR Something went wrong
+2020-09-09 22:20:50.3216 INFO Invalid username or password
+2020-09-09 22:20:55.0789 INFO User succesfuly logged in

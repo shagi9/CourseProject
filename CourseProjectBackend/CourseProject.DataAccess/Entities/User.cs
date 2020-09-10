@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
-using System.Text;
 
 namespace CourseProject.DataAccess.Entities
 {
@@ -12,7 +10,6 @@ namespace CourseProject.DataAccess.Entities
         {
             RegistrationDate = DateTime.Now;
             CourseToUsers = new List<CourseToUser>();
-            Courses = new List<Course>();
         }
 
         public string FirstName { get; set; }
@@ -21,7 +18,6 @@ namespace CourseProject.DataAccess.Entities
         public DateTime RegistrationDate { get; set; }
         
         public List<UserRefreshToken> UserRefreshTokens { get; set; }
-        public List<Course> Courses { get; set; }
         public List<CourseToUser> CourseToUsers {get; set;}
     }
 }

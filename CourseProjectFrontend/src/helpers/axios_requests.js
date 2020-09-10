@@ -1,12 +1,11 @@
 import { get, post } from 'axios';
-import { get as getCookies, set } from 'js-cookie';
+import { get as getCookies } from 'js-cookie';
 
 import { api } from './url';
 
 const getHeaders = () => {
   const token = getCookies('token');
-  const refreshToken = getCookies('refreshToken');
-  if (typeof(token) != 'undefined' && typeof(refreshToken) != 'undefined') {
+  if (typeof(token) != 'undefined') {
     return {
         headers: {
           Authorization: `Bearer ${token}`

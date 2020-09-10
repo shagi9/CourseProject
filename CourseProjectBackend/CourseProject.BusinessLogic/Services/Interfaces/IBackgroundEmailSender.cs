@@ -1,7 +1,4 @@
-﻿using CourseProject.BusinessLogic.Dto.CourseDto;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 using System.Threading.Tasks;
 
 namespace CourseProject.BusinessLogic.Services.Interfaces

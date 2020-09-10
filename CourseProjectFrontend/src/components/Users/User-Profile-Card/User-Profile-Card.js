@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { getRequest } from '../../../helpers/axios_requests';
 import "./User-Profile-Card.scss";
-import { Table, Card } from "antd";
+import { Table } from "antd";
 
 export const UserProfileCard = () => {
   const [user, setUser] = useState({});

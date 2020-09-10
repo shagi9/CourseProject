@@ -1,11 +1,13 @@
-﻿using CourseProject.BusinessLogic.Dto.CourseDto;
+﻿using CourseProject.API.Helpers;
+using CourseProject.BusinessLogic.Dto.CourseDto;
 using CourseProject.BusinessLogic.Services.Interfaces;
 using CourseProject.BusinessLogic.Vm;
+using CourseProject.DataAccess.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using System;
+using Microsoft.Extensions.Options;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -17,11 +19,16 @@ namespace CourseProject.API.Controllers
     {
         private readonly ICourseService courseService;
         private readonly ILoggerService loggerService;
+        private readonly IWebHostEnvironment _host;
+        private readonly PhotoSettings photoSettings;
 
-        public CourseController(ICourseService courseService, ILoggerService loggerService)
+        public CourseController(ICourseService courseService, 
+            ILoggerService loggerService, IOptions<PhotoSettings> options, IWebHostEnvironment host)
         {
             this.courseService = courseService;
             this.loggerService = loggerService;
+            _host = host;
+            this.photoSettings = options.Value;
         }
 
         [HttpGet("[action]")]
@@ -45,6 +52,19 @@ namespace CourseProject.API.Controllers
             var courses = await courseService.GetAllCourses();
 
             return Ok(courses);
+        }
+
+        [HttpPost("[action]")]
+        public async Task<ActionResult<CourseViewModel>> AddCourseByAdmin([FromForm] AddCourseDto addCourse)
+        {
+            var result = await courseService.AddCourseByAdmin(addCourse);
+
+            if(result == null)
+            {
+                return BadRequest();
+            }
+
+            return Ok(result);
         }
 
         [HttpPost("[action]")]

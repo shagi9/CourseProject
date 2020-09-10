@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { getCookies, set } from 'js-cookie';
+import { set } from 'js-cookie';
 import { postRequest, getRequest } from '../../../helpers/axios_requests';
 import { Form, Input, Checkbox, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -33,15 +33,12 @@ import { useDispatch } from 'react-redux';
       const { status, data } = await postRequest('/auth/login', values);
       if (status === 200) {
         if (data.token != null){
-          if (data.refreshToken != null){
-          set('refreshToken', data.refreshToken);  
           set('token', data.token);
           
           const userResponse = await getRequest('/user/get-authorized-by-user');
           if(userResponse.status === 200){
             dispatch(setUser(userResponse.data));
           }
-        }
       }
     }
     if (status === 404) {

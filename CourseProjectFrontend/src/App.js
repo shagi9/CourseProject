@@ -15,6 +15,7 @@ import { ConfirmationPage } from './pages/ConfirmationPage/ConfirmationPage';
 import { SubscribePage } from './pages/SubscribePage/SubscribePage';
 import {UserProfilePage } from './pages/ProfilePage/Profile';
 import Courses from './pages/CoursesPage/Courses';
+import { AddCoursePage } from './pages/Add-Course-Page/Add-Course-Page';
 import { PageNotFound } from './pages/404-Page/404-page';
 
 export const App = () => {
@@ -47,6 +48,7 @@ export const App = () => {
         <Route path="/confirmation/:userId/:token" component={ConfirmationPage} />
         <Route path="/subscribe/:courseId" component={() => !!user.role ? <SubscribePage/> : <Redirect to="/login"/>}/>
         <Route path="/admin" component={() => !user.role ? <Redirect to="/login"/> : (user.role === "student" ? <Redirect to="/"/> : <Admin/>)}/>
+        <Route path="/addCourse" component={() => !user.role ? <Redirect to ="/login"/> : (user.role === "addCourse" ? <Redirect to ="/admin"/> : <AddCoursePage/>)} />
         <Route path="/profile" component={() => !user.role ? <Redirect to="/login"/> : (user.role === "admin" ? <Redirect to="/admin"/> : <UserProfilePage/>)} />
         <Route path='/404' component={PageNotFound} />
         <Redirect from='*' to='/404' /> 

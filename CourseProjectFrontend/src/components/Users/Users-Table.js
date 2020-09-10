@@ -3,6 +3,7 @@ import { postRequest } from "../../helpers/axios_requests";
 import "./Users-Table.css";
 
 import { CourseExpandableList } from "../Courses/Course-Expandable-List/Course-Expandable-List";
+import { Link } from "react-router-dom";
 import { Form, Input, Table, Button } from "antd";
 
 const formLoyaut = "inline";
@@ -153,6 +154,13 @@ export const UsersTable = () => {
           <Button htmlType="button" onClick={clearValue}>
             Clear
           </Button>
+        </Form.Item>
+        <Form.Item>
+          <Link to="/addCourse">
+            <Button htmlType="button">
+              Add Course
+            </Button>
+          </Link>
         </Form.Item>
       </Form>
       <Table

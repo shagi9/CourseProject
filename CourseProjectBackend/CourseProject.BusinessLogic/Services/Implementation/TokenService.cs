@@ -1,6 +1,4 @@
 ﻿using CourseProject.BusinessLogic.Services.Interfaces;
-using CourseProject.DataAccess.Entities;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;

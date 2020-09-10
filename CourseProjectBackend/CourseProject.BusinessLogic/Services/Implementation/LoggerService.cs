@@ -1,8 +1,5 @@
 ﻿using CourseProject.BusinessLogic.Services.Interfaces;
 using NLog;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace CourseProject.BusinessLogic.Services.Implementation
 {

@@ -1,9 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
-
+﻿
 namespace CourseProject.BusinessLogic.Vm
 {
     public class RefreshTokenViewModel

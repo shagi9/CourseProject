@@ -1,13 +1,8 @@
-﻿using AutoMapper;
-using CourseProject.BusinessLogic.Dto.AuthDto;
+﻿using CourseProject.BusinessLogic.Dto.AuthDto;
 using CourseProject.BusinessLogic.Services.Interfaces;
 using CourseProject.BusinessLogic.Vm;
-using CourseProject.DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace CourseProject.API.Controllers
@@ -23,6 +18,19 @@ namespace CourseProject.API.Controllers
         {
             this.authService = authService;
             this.loggerService = loggerService;
+        }
+
+        [HttpPost("facebookAuth")]
+        public async Task<ActionResult> Login([FromBody] FacebookAuthDto facebookAuthDto)
+        {
+            var authResponse = await authService.LoginWithFacebookAsync(facebookAuthDto.AccessToken);
+
+            if (authResponse == null)
+            {
+                return BadRequest("Login with Facebook was failed.");
+            }
+
+            return Ok(authResponse);
         }
 
         [HttpPost("login")]
@@ -44,21 +52,6 @@ namespace CourseProject.API.Controllers
             loggerService.LogInfo("User succesfuly logged in");
             return Ok(response);
         }
-
-        [HttpPost("refresh-token")]
-        public async Task<ActionResult<RefreshTokenViewModel>> RefreshToken(RefreshTokenViewModel token)
-        {
-            var response = await authService.RefreshToken(token);
-
-            if (response == null)
-            {
-                loggerService.LogError("User is not unathorized");
-                return Unauthorized("You are not unathorized");
-            }
-            return Ok(response);
-
-        }
-
 
         [HttpPost("register")]
         public async Task<ActionResult<RegisterDto>> Register([FromBody] RegisterDto user)

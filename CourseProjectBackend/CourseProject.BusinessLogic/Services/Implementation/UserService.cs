@@ -6,12 +6,8 @@ using CourseProject.BusinessLogic.Services.Interfaces;
 using CourseProject.BusinessLogic.Vm;
 using CourseProject.DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CourseProject.BusinessLogic.Services.Implementation
@@ -48,8 +44,6 @@ namespace CourseProject.BusinessLogic.Services.Implementation
 
             return res;
         }
-
-        
 
         public IQueryable<User> GetUsersByOrderDecent(string searchString, string orderBy, string orderByField, PageInfo pageInfo)
         {

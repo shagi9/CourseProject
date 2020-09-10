@@ -1,0 +1,9 @@
+2020-09-07 11:36:21.5421 INFO User succesfuly logged in
+2020-09-07 11:36:30.6906 ERROR User is not subscribed
+2020-09-07 11:36:34.7436 ERROR User is not subscribed
+2020-09-07 11:37:26.1371 ERROR User is not subscribed
+2020-09-07 11:44:18.1225 ERROR User is not subscribed
+2020-09-07 16:22:59.2252 INFO User succesfuly logged in
+2020-09-07 16:23:02.6662 ERROR User is not subscribed
+2020-09-07 16:42:16.9125 INFO Invalid username or password
+2020-09-07 16:42:30.1492 INFO User succesfuly logged in

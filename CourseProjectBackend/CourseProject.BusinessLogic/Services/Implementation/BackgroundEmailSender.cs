@@ -1,9 +1,6 @@
-﻿using CourseProject.BusinessLogic.Dto.CourseDto;
-using CourseProject.BusinessLogic.Services.Interfaces;
+﻿using CourseProject.BusinessLogic.Services.Interfaces;
 using Hangfire;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Templates;
 using Templates.ViewModels;

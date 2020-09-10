@@ -9,10 +9,12 @@ using Hangfire;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -50,6 +52,7 @@ namespace CourseProject.API
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<ILoggerService, LoggerService>();
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IFacebookAuthService, FacebookAuthService>();
             services.AddTransient<IAuthService, AuthService>();
 
             services.AddRazorPages();
@@ -122,6 +125,11 @@ namespace CourseProject.API
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
+            })
+            .AddFacebook(x =>
+            {
+                x.AppId = "786098545523414";
+                x.AppSecret = "e482969f024742e2ee3a708267836770";
             });
 
             services.AddAutoMapper(new Assembly[]{
@@ -142,7 +150,20 @@ namespace CourseProject.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+           Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images")),
+                RequestPath = new PathString("/Images")
+            });
 
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images")),
+                RequestPath = new PathString("/Images")
+            });
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
@@ -152,6 +173,8 @@ namespace CourseProject.API
 
             app.UseRouting();
             app.UseCors("CorsPolicy");
+           
+
             app.UseAuthentication();
             app.UseAuthorization();
 

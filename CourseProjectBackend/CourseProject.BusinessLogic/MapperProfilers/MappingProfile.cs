@@ -3,11 +3,6 @@ using CourseProject.BusinessLogic.Dto.AuthDto;
 using CourseProject.BusinessLogic.Dto.CourseDto;
 using CourseProject.BusinessLogic.Vm;
 using CourseProject.DataAccess.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 
 namespace CourseProject.BusinessLogic.MapperProfilers
 {
@@ -31,6 +26,12 @@ namespace CourseProject.BusinessLogic.MapperProfilers
                 .ForMember(course => course.StartDate, opt => opt.MapFrom(course => course.StartDate.ToString("d")))
                 .ForMember(course => course.EndDate, opt => opt.MapFrom(course => course.EndDate.ToString("d")));
 
+            CreateMap<AddCourseDto, Course>()
+                .ForMember(course => course.Name, opt => opt.MapFrom(course => course.Name))
+                .ForMember(course => course.Description, opt => opt.MapFrom(course => course.Description))
+                .ForMember(course => course.ImgUrl, opt => opt.MapFrom(course => course.File));
+
+            
             CreateMap<SubscribeToCourseDto, CourseToUser>()
                 .ForMember(course => course.EndDate, opt => opt.MapFrom(course => course.StartDate.AddDays(14)));
             

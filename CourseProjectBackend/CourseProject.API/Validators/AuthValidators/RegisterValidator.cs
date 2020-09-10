@@ -1,10 +1,5 @@
 ﻿using CourseProject.BusinessLogic.Dto.AuthDto;
 using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CourseProject.API.Validators.AuthValidators
 {

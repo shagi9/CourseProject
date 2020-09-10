@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { getRequest } from '../../../helpers/axios_requests';
 import { CourseCard } from '../Course-Card/CourseCard';
-import { List, Avatar, Space } from 'antd';
 import './CourseList.css';
 
 export const CourseList = ({url}) => {

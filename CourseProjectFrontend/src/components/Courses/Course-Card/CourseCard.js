@@ -6,12 +6,14 @@ import './CourseCard.scss';
 export const CourseCard = ({ id, name, description, imgUrl}) => {
   const { Meta } = Card;
   const link = "/subscribe/" + id;
+  const file = 'https://localhost:5001/images/' + imgUrl;
+  console.log(file);
   return (
     <Card
         cover = {
         <img
           className="img"
-          src={imgUrl} 
+          src={file} 
           alt="courseImage"
         />
       }

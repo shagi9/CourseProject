@@ -6,13 +6,13 @@ using CourseProject.BusinessLogic.Vm;
 using CourseProject.DataAccess.DataContext;
 using CourseProject.DataAccess.Entities;
 using Hangfire;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using SendGrid;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Templates;
 using Templates.ViewModels;
@@ -28,12 +28,13 @@ namespace CourseProject.BusinessLogic.Services.Implementation
         private readonly IRazorViewToStringRenderer renderer;
         private readonly UserManager<User> userManager;
         const string view = "/Views/Emails/SubscribeToCourse";
-        const string weekView = "/Views/Emails/ScheduledWeekReminder";
+        private readonly IWebHostEnvironment host;
 
         public CourseService(DBContext context, IMapper mapper, 
             IBackgroundEmailSender backgroundEmailSender, 
             IEmailService emailService, 
-            IRazorViewToStringRenderer razorViewToStringRenderer, UserManager<User> userManager)
+            IRazorViewToStringRenderer razorViewToStringRenderer, 
+            UserManager<User> userManager, IWebHostEnvironment host)
         {
             this.backgroundEmailSender = backgroundEmailSender;
             this.emailService = emailService;
@@ -41,6 +42,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             this.mapper = mapper;
             this.renderer = razorViewToStringRenderer;
             this.userManager = userManager;
+            this.host = host;
         }
         public async Task<List<CourseViewModel>> GetAllCourses()
         {
@@ -83,6 +85,37 @@ namespace CourseProject.BusinessLogic.Services.Implementation
         public async Task<bool> GetIsUserSubscribedToTheCourse(int courseId, int userId)
         {
             return await context.CoursesToUsers.FirstOrDefaultAsync(x => x.CourseId == courseId && x.UserId == userId) != null;
+        }
+
+        public async Task<CourseViewModel> AddCourseByAdmin(AddCourseDto addCourse)
+        {
+            var newCourse = mapper.Map<Course>(addCourse);
+            if (addCourse.File != null)
+            {
+                var photoFolderPath = Path.Combine(host.WebRootPath, "Images");
+                if (!Directory.Exists(photoFolderPath))
+                {
+                    Directory.CreateDirectory(photoFolderPath);
+                }
+
+                string fileName = Guid.NewGuid().ToString() + Path.GetExtension(addCourse.File.FileName);
+
+                var filePath = Path.Combine(photoFolderPath, fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await addCourse.File.CopyToAsync(stream);
+                }
+                
+                newCourse.ImgUrl = fileName;
+                
+                await context.Courses.AddAsync(newCourse);
+                await context.SaveChangesAsync();
+
+                return mapper.Map<CourseViewModel>(newCourse);
+            } else
+            {
+                return null;
+            }
         }
 
         public async Task<SubscribeToCourseViewModel> SubscribeToCourse(SubscribeToCourseDto subscribe)
@@ -139,7 +172,5 @@ namespace CourseProject.BusinessLogic.Services.Implementation
                 await backgroundEmailSender.ScheduledMonth(email, monthDate, courseName, userName);
             }
         }
-
-        
     }
 }

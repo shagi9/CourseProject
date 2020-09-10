@@ -3,7 +3,6 @@ import { Card, DatePicker, Button} from "antd";
 import { postRequest, getRequest } from "../../../helpers/axios_requests";
 
 import "./SubscribeCard.scss";
-import { Link } from "react-router-dom";
 import { AlertOutlined } from "@ant-design/icons";
 
 export const SubscribeCard = ({id, name, description, imgUrl}) => {
@@ -45,9 +44,11 @@ const subscribeToTheCourse = async () => {
   }
 };
 
+const file = 'https://localhost:5001/images/' + imgUrl;
+
   return (
     <Card title={name} className="subscribe-card">
-      <img src={imgUrl} alt="courseImage" className="imgsubscribe" />
+      <img src={file} alt="courseImage" className="imgsubscribe" />
       <p>{description}</p>
         {!isSubscribed ? ( 
         <div className="subscribe-block">

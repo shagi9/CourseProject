@@ -6,11 +6,9 @@ using CourseProject.DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -29,11 +27,13 @@ namespace CourseProject.BusinessLogic.Services.Implementation
         private readonly ITokenService tokenService;
         private readonly IEmailService emailService;
         private readonly IRazorViewToStringRenderer razorViewToStringRenderer;
+        private readonly IFacebookAuthService facebookAuthService;
         const string view = "/Views/Emails/ConfirmAccountEmail";
 
         public AuthService(DBContext context, UserManager<User> userManager, 
             ITokenService tokenService, IMapper mapper, 
-            IEmailService emailService, IRazorViewToStringRenderer razorViewToStringRenderer)
+            IEmailService emailService, IRazorViewToStringRenderer razorViewToStringRenderer,
+            IFacebookAuthService facebookAuthService)
         {
             this.context = context;
             this.mapper = mapper;
@@ -41,6 +41,56 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             this.tokenService = tokenService;
             this.emailService = emailService;
             this.razorViewToStringRenderer = razorViewToStringRenderer;
+            this.facebookAuthService = facebookAuthService;
+        }
+
+        public async Task<LoginViewModel> LoginWithFacebookAsync(string accessToken)
+        {
+            var validatedTokenResult = await facebookAuthService.ValidateAccessTokenAsync(accessToken);
+
+            if (!validatedTokenResult.Data.IsValid)
+            {
+                return null;
+            }
+
+            var userInfo = await facebookAuthService.GetUserInfoAsync(accessToken);
+
+            var identityUser = await userManager.FindByEmailAsync(userInfo.Email);
+
+            if (identityUser == null)
+            {
+                identityUser = new User
+                {
+                    FirstName = userInfo.FirstName,
+                    LastName = userInfo.LastName,
+                    Email = userInfo.Email,
+                    UserName = userInfo.FirstName + userInfo.LastName,
+                    DateOfBirth = default(DateTime)
+                };
+
+                var createdResult = await userManager.CreateAsync(identityUser);
+                if (!createdResult.Succeeded)
+                {
+                    return null;
+                }
+
+                await userManager.AddToRoleAsync(identityUser, "student");
+            }
+
+            var role = await userManager.GetRolesAsync(identityUser);
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, identityUser.Id.ToString()),
+                new Claim(ClaimTypes.Role, role.First()),
+                new Claim(ClaimTypes.Name, identityUser.UserName)
+            };
+
+            var token = tokenService.GenerateJWT(claims);
+            return new LoginViewModel
+            {
+                IsEmailConfirmed = true,
+                Token = token,
+            };
         }
         public async Task<LoginViewModel> Login(LoginDto loginModel)
         {
@@ -68,19 +118,10 @@ namespace CourseProject.BusinessLogic.Services.Implementation
                 };
 
                 var token = tokenService.GenerateJWT(claims);
-
-                var refreshToken = tokenService.GenerateRefreshToken();
-                await context.UserRefreshTokens.AddAsync(new UserRefreshToken
-                {
-                    UserId = user.Id,
-                    RefreshToken = refreshToken,
-                    Expires = DateTime.UtcNow.AddMonths(1)
-                });
                 await context.SaveChangesAsync();
                 return new LoginViewModel
                 {
                     Token = token,
-                    RefreshToken = refreshToken,
                     IsEmailConfirmed = true
                 };
             }
@@ -88,50 +129,6 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             {
                 return null;
             }
-        }
-
-        public async Task<RefreshTokenViewModel> RefreshToken(RefreshTokenViewModel token)
-        {
-            string accessToken = token.Token;
-            string refreshToken = token.RefreshToken;
-
-            var principal = tokenService.GetPrincipalFromExpiredToken(accessToken);
-
-            var userIdStr = principal.FindFirst(ClaimTypes.NameIdentifier).Value;
-
-            if (string.IsNullOrEmpty(userIdStr))
-            {
-                throw new SecurityTokenException($"Missing claim: {ClaimTypes.Name}!");
-            }
-
-            var userId = int.Parse(userIdStr);
-
-            var userRefreshToken = await context.UserRefreshTokens
-                .SingleOrDefaultAsync(user => user.UserId == userId && user.RefreshToken == refreshToken);
-
-            if (userRefreshToken == null)
-            {
-                throw new SecurityTokenException("Invalid refresh token");
-            }
-
-            context.UserRefreshTokens.Remove(userRefreshToken);
-
-            if (userRefreshToken.Expires < DateTime.UtcNow)
-            {
-                throw new SecurityTokenException("Token is expired");
-            }
-
-            var newJwtToken = tokenService.GenerateJWT(principal.Claims);
-            var newRefreshToken = tokenService.GenerateRefreshToken();
-
-            await context.UserRefreshTokens.AddAsync(new UserRefreshToken
-            {
-                UserId = userId,
-                RefreshToken = newRefreshToken,
-                Expires = DateTime.UtcNow.AddMonths(1)
-            });
-            await context.SaveChangesAsync();
-            return new RefreshTokenViewModel(newJwtToken, newRefreshToken);
         }
 
         public async Task<IdentityResult> Register(RegisterDto registerDto)
@@ -178,5 +175,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             var result = await userManager.ConfirmEmailAsync(user, token);
             return result;
         }
+
+        
     }
 }

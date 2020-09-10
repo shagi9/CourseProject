@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import { Header } from '../../components/Layouts/Header/Header';
-import { Layout, Menu, Drawer } from 'antd';
+import React from 'react';
 import { UsersTable } from '../../components/Users/Users-Table';
 import './Admin.css';
 

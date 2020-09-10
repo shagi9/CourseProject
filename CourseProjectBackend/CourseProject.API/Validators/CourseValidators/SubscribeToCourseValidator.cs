@@ -1,9 +1,6 @@
 ﻿using CourseProject.BusinessLogic.Dto.CourseDto;
 using FluentValidation;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CourseProject.API.Validators.CourseValidators
 {
