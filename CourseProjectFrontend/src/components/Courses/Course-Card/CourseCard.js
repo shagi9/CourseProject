@@ -25,7 +25,7 @@ export const CourseCard = ({ id, name, description, imgUrl}) => {
       >
       <Meta
       title={name}
-      description={description}
+      description={`${description.slice(0, 320)}...`}
     />
     </Card>
   );

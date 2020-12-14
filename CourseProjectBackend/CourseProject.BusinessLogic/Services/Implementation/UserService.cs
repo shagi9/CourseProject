@@ -4,6 +4,7 @@ using CourseProject.BusinessLogic.Dto.AuthDto;
 using CourseProject.BusinessLogic.Dto.UsersDto;
 using CourseProject.BusinessLogic.Services.Interfaces;
 using CourseProject.BusinessLogic.Vm;
+using CourseProject.DataAccess.DataContext;
 using CourseProject.DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,11 +16,13 @@ namespace CourseProject.BusinessLogic.Services.Implementation
     public class UserService : IUserService
     {
         private readonly UserManager<User> userManager;
+        private readonly DBContext context;
         private readonly IMapper mapper;
 
-        public UserService(UserManager<User> userManager, IMapper mapper)
+        public UserService(UserManager<User> userManager, DBContext context, IMapper mapper)
         {
             this.userManager = userManager;
+            this.context = context;
             this.mapper = mapper;
         }
         public async Task<GetAutorizedUserDto> GetAutorizedByUser(string userId, string role)
@@ -37,8 +40,7 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             var res = userManager.Users
                     .Where(x =>
                         x.UserName.ToLower().Contains(searchString) || x.FirstName.ToLower().Contains(searchString) ||
-                        x.LastName.ToLower().Contains(searchString) || x.Email.ToLower().Contains(searchString) ||
-                        x.PhoneNumber.Contains(searchString));
+                        x.LastName.ToLower().Contains(searchString) || x.Email.ToLower().Contains(searchString));
 
             pageInfo.Total = res.Count();
 
@@ -64,8 +66,11 @@ namespace CourseProject.BusinessLogic.Services.Implementation
                 case "email descend":
                     users = users.OrderByDescending(user => user.Email).Skip((currentPage) * pageSize).Take(pageSize);
                     break;
-                case "fullName ascend":
-                    users = users.OrderBy(user => user.FirstName).ThenBy(user => user.LastName).Skip((currentPage) * pageSize).Take(pageSize);
+                case "firstName ascend":
+                    users = users.OrderBy(user => user.FirstName).Skip((currentPage) * pageSize).Take(pageSize);
+                    break;
+                case "lastName ascend":
+                    users = users.OrderBy(user => user.LastName).Skip((currentPage) * pageSize).Take(pageSize);
                     break;
                 case "dateOfBirth descend":
                     users = users.OrderByDescending(user => user.DateOfBirth).Skip((pageInfo.Current) * pageSize).Take(pageSize);
@@ -101,8 +106,11 @@ namespace CourseProject.BusinessLogic.Services.Implementation
                 case "email ascend":
                     users = users.OrderBy(user => user.Email).Skip((currentPage) * pageSize).Take(pageSize);
                     break;
-                case "fullName ascend":
-                    users = users.OrderBy(user => user.FirstName).ThenBy(user => user.LastName).Skip((currentPage) * pageSize).Take(pageSize);
+                case "firstName ascend":
+                    users = users.OrderBy(user => user.FirstName).Skip((currentPage) * pageSize).Take(pageSize);
+                    break;
+                case "lastName ascend":
+                    users = users.OrderBy(user => user.LastName).Skip((currentPage) * pageSize).Take(pageSize);
                     break;
                 case "dateOfBirth ascend":
                     users = users.OrderBy(user => user.DateOfBirth).Skip((currentPage) * pageSize).Take(pageSize);
@@ -185,6 +193,43 @@ namespace CourseProject.BusinessLogic.Services.Implementation
             var user = await userManager.FindByIdAsync(userId);
 
             return mapper.Map<UserWithFullInfoViewModel>(user);
+        }
+
+        public async Task<User> DeleteUser(string userId)
+        {
+            var user = await userManager.FindByIdAsync(userId);
+
+            if (user != null)
+            {
+                context.Users.Remove(user);
+                await context.SaveChangesAsync();
+            }
+            else
+            {
+                return null;
+            }
+
+            return user;
+        }
+
+        public async Task<User> UpdateUser(UpdateUserDto updateUser)
+        {
+            var user = await context.Users.FirstOrDefaultAsync(user => user.Id == updateUser.Id);
+
+            if (user != null)
+            {
+                user.FirstName = updateUser.FirstName;
+                user.LastName = updateUser.LastName;
+                user.UserName = updateUser.UserName;
+                user.DateOfBirth = updateUser.DateOfBirth;
+                await context.SaveChangesAsync();
+            } 
+            else
+            {
+                return null;
+            }
+
+            return user;
         }
     }
 }

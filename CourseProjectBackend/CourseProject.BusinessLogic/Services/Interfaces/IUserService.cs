@@ -10,6 +10,8 @@ namespace CourseProject.BusinessLogic.Services.Interfaces
     public interface IUserService
     {
        Task<GetAutorizedUserDto> GetAutorizedByUser(string userId, string role);
+       Task<User> DeleteUser(string userId);
+       Task<User> UpdateUser(UpdateUserDto updateUser);
        IQueryable<User> ClearUsersByData(PageInfo pageInfo);
        IQueryable<User> GetUsersByData(string searchString, PageInfo pageInfo);
        IQueryable<User> GetUsersByOrderDecent(string searchString, string orderBy, string orderByField, PageInfo pageInfo);

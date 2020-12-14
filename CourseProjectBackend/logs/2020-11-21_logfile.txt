@@ -1,0 +1,64 @@
+2020-11-21 16:16:35.0743 INFO Invalid username or password
+2020-11-21 16:19:10.9300 INFO Invalid username or password
+2020-11-21 16:19:26.8474 INFO Invalid username or password
+2020-11-21 16:19:30.6395 INFO Invalid username or password
+2020-11-21 16:21:33.0363 INFO Invalid username or password
+2020-11-21 16:23:17.0924 INFO Invalid username or password
+2020-11-21 16:23:29.9230 INFO Invalid username or password
+2020-11-21 16:23:56.8527 INFO Email is not confirmed
+2020-11-21 16:24:04.0591 INFO User succesfuly logged in
+2020-11-21 16:24:21.4125 INFO Invalid username or password
+2020-11-21 16:25:24.9985 INFO Invalid username or password
+2020-11-21 16:25:25.8127 INFO User succesfuly logged in
+2020-11-21 16:25:42.0596 ERROR User is not found with this email
+2020-11-21 16:25:43.5875 ERROR User is not found with this email
+2020-11-21 16:39:56.0560 INFO User succesfuly logged in
+2020-11-21 19:44:33.9688 INFO Invalid username or password
+2020-11-21 19:44:51.6370 INFO Invalid username or password
+2020-11-21 19:45:41.9434 ERROR Something went wrong
+2020-11-21 19:49:08.6716 INFO Invalid username or password
+2020-11-21 19:49:14.7780 INFO User succesfuly logged in
+2020-11-21 20:21:12.3617 ERROR User is not found with this email
+2020-11-21 20:40:20.3402 INFO User succesfuly logged in
+2020-11-21 20:52:33.8440 ERROR Something went wrong
+2020-11-21 20:54:39.6653 ERROR User is not found with this email
+2020-11-21 20:54:41.8177 ERROR User is not found with this email
+2020-11-21 20:57:51.9302 INFO User succesfuly logged in
+2020-11-21 20:58:14.0838 ERROR User is not subscribed
+2020-11-21 20:58:17.2590 ERROR User is not subscribed
+2020-11-21 21:00:31.7670 ERROR User is not subscribed
+2020-11-21 21:00:33.7596 ERROR User is not subscribed
+2020-11-21 21:00:35.4033 ERROR User is not subscribed
+2020-11-21 21:04:11.1336 INFO Invalid username or password
+2020-11-21 21:04:29.8305 INFO Invalid username or password
+2020-11-21 21:05:56.2910 INFO Email is not confirmed
+2020-11-21 21:06:25.1997 INFO User succesfuly logged in
+2020-11-21 21:12:40.1577 INFO Invalid username or password
+2020-11-21 21:12:44.2582 INFO User succesfuly logged in
+2020-11-21 21:13:24.0934 INFO User succesfuly logged in
+2020-11-21 21:13:45.8271 INFO User succesfuly logged in
+2020-11-21 21:14:49.2879 ERROR User is not subscribed
+2020-11-21 21:14:53.3225 ERROR User is not subscribed
+2020-11-21 21:14:55.5834 ERROR User is not subscribed
+2020-11-21 21:15:01.7134 ERROR User is not subscribed
+2020-11-21 21:15:04.6500 ERROR User is not subscribed
+2020-11-21 21:15:15.8243 ERROR User is not subscribed
+2020-11-21 21:17:51.7497 ERROR User is not subscribed
+2020-11-21 21:18:01.4777 ERROR User is not subscribed
+2020-11-21 21:19:05.5872 ERROR User is not subscribed
+2020-11-21 21:19:08.3871 ERROR User is not subscribed
+2020-11-21 21:19:09.3576 ERROR User is not subscribed
+2020-11-21 21:20:02.7509 ERROR User is not subscribed
+2020-11-21 21:20:24.1508 ERROR User is not subscribed
+2020-11-21 21:20:29.5027 ERROR User is not subscribed
+2020-11-21 21:22:09.1321 ERROR User is not subscribed
+2020-11-21 21:22:11.7063 ERROR User is not subscribed
+2020-11-21 21:22:13.4228 ERROR User is not subscribed
+2020-11-21 21:22:15.2571 ERROR User is not subscribed
+2020-11-21 21:23:58.1938 ERROR User is not subscribed
+2020-11-21 21:27:03.1038 INFO User succesfuly logged in
+2020-11-21 21:27:43.4890 ERROR User is not found with this email
+2020-11-21 21:27:51.3946 ERROR User is not found with this email
+2020-11-21 21:33:18.1659 INFO User succesfuly logged in
+2020-11-21 21:35:05.8622 INFO User succesfuly logged in
+2020-11-21 21:36:04.0784 INFO User succesfuly logged in

@@ -42,6 +42,34 @@ namespace CourseProject.API.Controllers
             return Ok(result);
         }
 
+        [Authorize(Roles = "admin")]
+        [HttpDelete("[action]")]
+        public async Task<ActionResult<UserWithFullInfoViewModel>> DeleteUser(string userId)
+        {
+            var result = await service.DeleteUser(userId);
+
+            if (result == null)
+            {
+                return BadRequest("User not found");
+            }
+
+            return Ok("User is deleted");
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpPut("[action]")]
+        public async Task<ActionResult<User>> UpdateUser(UpdateUserDto updateUser)
+        {
+            var result = await service.UpdateUser(updateUser);
+            
+            if (result == null)
+            {
+                return NotFound(result);
+            }
+            
+           return Ok(result);
+        }
+
         [Authorize]
         [HttpGet("get-authorized-by-user")]
         public async Task<ActionResult<GetAutorizedUserDto>> GetAuthorized()
@@ -69,5 +97,7 @@ namespace CourseProject.API.Controllers
 
             return Ok(response);
         }
+
+
     }
 }

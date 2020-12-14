@@ -1,0 +1,10 @@
+2020-11-29 13:49:42.9280 INFO User succesfuly logged in
+2020-11-29 13:50:16.3592 ERROR User is not found with this email
+2020-11-29 13:50:17.4210 ERROR User is not found with this email
+2020-11-29 13:50:18.4833 ERROR User is not found with this email
+2020-11-29 13:50:19.2179 ERROR User is not found with this email
+2020-11-29 13:51:07.8705 ERROR User is not found with this email
+2020-11-29 13:59:38.4922 INFO User succesfuly logged in
+2020-11-29 13:59:38.4922 INFO User succesfuly logged in
+2020-11-29 14:01:43.1533 INFO User succesfuly logged in
+2020-11-29 14:02:00.5454 ERROR User is not found with this email

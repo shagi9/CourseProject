@@ -1,4 +1,4 @@
-import { get, post } from 'axios';
+import { get, post, delete as del } from 'axios';
 import { get as getCookies } from 'js-cookie';
 
 import { api } from './url';
@@ -20,6 +20,18 @@ export const getRequest = async (url) => {
   const headers = getHeaders();
   try {
     return await get(api + url, !!headers && headers)
+      .then(response => response)
+      .catch(error => error.response);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const deleteRequest = async (url) => {
+  const headers = getHeaders();
+
+  try {
+    return await del(api + url, !!headers && headers)
       .then(response => response)
       .catch(error => error.response);
   } catch (err) {
